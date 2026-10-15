@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VOTABLE xmlns="http://www.ivoa.net/xml/VOTable/v1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.3" xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/VOTable-1.3.xsd">
+  <DESCRIPTION>Astro-COLIBRI Simple Cone Search Results</DESCRIPTION>
+  <RESOURCE type="results">
+    <DESCRIPTION>Cone search results from Astro-COLIBRI Simple Cone Search</DESCRIPTION>
+    <INFO name="title" value="Astro-COLIBRI Simple Cone Search Results"/>
+    <INFO name="creator" value="Astro-COLIBRI Team"/>
+    <INFO name="creator_ivoid" value="ivo://AstroCOLIBRI"/>
+    <INFO name="publisher" value="Astro-COLIBRI"/>
+    <INFO name="publisher_ivoid" value="ivo://AstroCOLIBRI"/>
+    <INFO name="contact" value="astro.colibri@gmail.com"/>
+    <INFO name="reference_url" value="https://astro-colibri.science/scs/capabilities"/>
+    <INFO name="request_date" value="2026-10-15T23:48:06.722484Z"/>
+    <INFO name="service_protocol" value="ivo://ivoa.net/std/ConeSearch"/>
+    <INFO name="service_ivoid" value="ivo://AstroCOLIBRI"/>
+    <INFO name="request" value="https://astro-colibri.science/scs?RA=268.03&amp;DEC=-23.72&amp;SR=1.0&amp;VERB=3"/>
+    <INFO name="data_ivoid" value="ivo://AstroCOLIBRI"/>
+    <INFO name="QUERY_RA" value="268.03">Right Ascension (ICRS, decimal degrees)</INFO>
+    <INFO name="QUERY_DEC" value="-23.72">Declination (ICRS, decimal degrees)</INFO>
+    <INFO name="QUERY_SR" value="1.0">Search radius (decimal degrees)</INFO>
+    <INFO name="QUERY_STATUS" value="OK"/>
+    <TABLE name="cone_search_results">
+      <DESCRIPTION>Results of cone search query</DESCRIPTION>
+      <FIELD name="ID_MAIN" datatype="char" ucd="meta.id;meta.main" arraysize="*">
+        <DESCRIPTION>Unique source identifier (trigger_id)</DESCRIPTION>
+      </FIELD>
+      <FIELD name="RA_MAIN" datatype="double" ucd="pos.eq.ra;meta.main" unit="deg">
+        <DESCRIPTION>Right Ascension (ICRS, J2000)</DESCRIPTION>
+      </FIELD>
+      <FIELD name="DEC_MAIN" datatype="double" ucd="pos.eq.dec;meta.main" unit="deg">
+        <DESCRIPTION>Declination (ICRS, J2000)</DESCRIPTION>
+      </FIELD>
+      <FIELD name="error" datatype="double" ucd="stat.error;pos.eq" unit="deg">
+        <DESCRIPTION>Position error</DESCRIPTION>
+      </FIELD>
+      <FIELD name="separation" datatype="double" ucd="pos.angDistance" unit="deg">
+        <DESCRIPTION>Angular separation from search center</DESCRIPTION>
+      </FIELD>
+      <FIELD name="observatory" datatype="char" ucd="meta.id.instrument" arraysize="*">
+        <DESCRIPTION>Observatory or experiment name</DESCRIPTION>
+      </FIELD>
+      <FIELD name="type" datatype="char" ucd="src.class" arraysize="*">
+        <DESCRIPTION>Event classification</DESCRIPTION>
+      </FIELD>
+      <FIELD name="source_name" datatype="char" ucd="meta.id" arraysize="*">
+        <DESCRIPTION>Source or event name</DESCRIPTION>
+      </FIELD>
+      <FIELD name="timestamp" datatype="double" ucd="time.epoch" unit="ms">
+        <DESCRIPTION>Event timestamp (Unix milliseconds)</DESCRIPTION>
+      </FIELD>
+      <FIELD name="time" datatype="char" ucd="time.event" arraysize="*">
+        <DESCRIPTION>Event time (ISO 8601 UTC)</DESCRIPTION>
+      </FIELD>
+      <FIELD name="instrument" datatype="char" ucd="instr.setup" arraysize="*">
+        <DESCRIPTION>Detecting instrument</DESCRIPTION>
+      </FIELD>
+      <FIELD name="astro_colibri_id" datatype="char" ucd="meta.id.cross" arraysize="*">
+        <DESCRIPTION>Astro-COLIBRI unique identifier</DESCRIPTION>
+      </FIELD>
+      <FIELD name="alert_type" datatype="char" ucd="meta.code.class" arraysize="*">
+        <DESCRIPTION>Alert type (Preliminary/Update/etc)</DESCRIPTION>
+      </FIELD>
+      <FIELD name="significance" datatype="double" ucd="stat.snr" unit="sigma">
+        <DESCRIPTION>Statistical significance</DESCRIPTION>
+      </FIELD>
+      <FIELD name="redshift" datatype="double" ucd="src.redshift">
+        <DESCRIPTION>Source redshift</DESCRIPTION>
+      </FIELD>
+      <FIELD name="constellation" datatype="char" ucd="pos.constellation" arraysize="*">
+        <DESCRIPTION>Constellation name</DESCRIPTION>
+      </FIELD>
+      <FIELD name="broker" datatype="char" ucd="meta.curation" arraysize="*">
+        <DESCRIPTION>Information source/broker</DESCRIPTION>
+      </FIELD>
+      <FIELD name="astro_colibri_url" datatype="char" ucd="meta.ref.url" arraysize="*">
+        <DESCRIPTION>Astro-COLIBRI event page URL</DESCRIPTION>
+      </FIELD>
+      <FIELD name="trigger_id" datatype="char" ucd="meta.id" arraysize="*">
+        <DESCRIPTION>Internal trigger identifier</DESCRIPTION>
+      </FIELD>
+      <FIELD name="pkt_ser_num" datatype="int" ucd="meta.version">
+        <DESCRIPTION>Packet serial number (revision count)</DESCRIPTION>
+      </FIELD>
+      <FIELD name="far" datatype="double" ucd="stat.falsealarm" unit="yr-1">
+        <DESCRIPTION>False alarm rate</DESCRIPTION>
+      </FIELD>
+      <FIELD name="signalness" datatype="double" ucd="stat.probability">
+        <DESCRIPTION>Astrophysical origin probability</DESCRIPTION>
+      </FIELD>
+      <FIELD name="energy" datatype="double" ucd="phys.energy" unit="TeV">
+        <DESCRIPTION>Event energy</DESCRIPTION>
+      </FIELD>
+      <FIELD name="transient_flux" datatype="double" ucd="phot.flux">
+        <DESCRIPTION>Transient flux</DESCRIPTION>
+      </FIELD>
+      <FIELD name="transient_flux_error" datatype="double" ucd="stat.error;phot.flux">
+        <DESCRIPTION>Transient flux uncertainty</DESCRIPTION>
+      </FIELD>
+      <FIELD name="transient_flux_units" datatype="char" ucd="meta.unit" arraysize="*">
+        <DESCRIPTION>Flux units</DESCRIPTION>
+      </FIELD>
+      <FIELD name="transient_flux_band" datatype="char" ucd="meta.unit" arraysize="*">
+        <DESCRIPTION>Band or filter name of the flux of the detected transient</DESCRIPTION>
+      </FIELD>
+      <FIELD name="extinction_ebv" datatype="double" ucd="phot.extinction;em.opt.B;em.opt.V" unit="mag">
+        <DESCRIPTION>Galactic reddening E(B-V)</DESCRIPTION>
+      </FIELD>
+      <FIELD name="event_url" datatype="char" ucd="meta.ref.url" arraysize="*">
+        <DESCRIPTION>URL to event information</DESCRIPTION>
+      </FIELD>
+      <FIELD name="lc_url" datatype="char" ucd="meta.ref.url;src.var" arraysize="*">
+        <DESCRIPTION>Lightcurve URL</DESCRIPTION>
+      </FIELD>
+      <FIELD name="dm" datatype="char" ucd="phys.dispMeasure" arraysize="*">
+        <DESCRIPTION>Dispersion measure (FRBs)</DESCRIPTION>
+      </FIELD>
+      <FIELD name="gw_BNS" datatype="double" ucd="stat.probability">
+        <DESCRIPTION>GW: Binary neutron star probability</DESCRIPTION>
+      </FIELD>
+      <FIELD name="gw_NSBH" datatype="double" ucd="stat.probability">
+        <DESCRIPTION>GW: Neutron star-black hole probability</DESCRIPTION>
+      </FIELD>
+      <FIELD name="gw_BBH" datatype="double" ucd="stat.probability">
+        <DESCRIPTION>GW: Binary black hole probability</DESCRIPTION>
+      </FIELD>
+      <FIELD name="gw_hasNS" datatype="double" ucd="stat.probability">
+        <DESCRIPTION>GW: Has neutron star probability</DESCRIPTION>
+      </FIELD>
+      <DATA>
+        <TABLEDATA>
+          <TR>
+            <TD>TNS2026abbx</TD>
+            <TD>268.0283300000</TD>
+            <TD>-23.7224200000</TD>
+            <TD>0.0000000000</TD>
+            <TD>0.0028625093</TD>
+            <TD>ASAS-SN</TD>
+            <TD>Nova</TD>
+            <TD>AT 2026abbx</TD>
+            <TD>1788893856000.0000000000</TD>
+            <TD>2026-09-08 18:57:36.000</TD>
+            <TD/>
+            <TD>AC 2026abhl</TD>
+            <TD/>
+            <TD/>
+            <TD/>
+            <TD>Sagittarius</TD>
+            <TD>TNS</TD>
+            <TD>https://astro-colibri.com/event:TNS2026abbx</TD>
+            <TD>TNS2026abbx</TD>
+            <TD/>
+            <TD/>
+            <TD/>
+            <TD/>
+            <TD>12.6000000000</TD>
+            <TD/>
+            <TD>mag</TD>
+            <TD>g-Sloan</TD>
+            <TD>2.7172780037</TD>
+            <TD/>
+            <TD>https://storage.googleapis.com/astro-colibri-optical-lightcurve/Astro-COLIBRI_AT2026abbx_lightcurve_created2026-10-14.png</TD>
+            <TD/>
+            <TD/>
+            <TD/>
+            <TD/>
+            <TD/>
+          </TR>
+          <TR>
+            <TD>tcp_j17520680-2343207</TD>
+            <TD>268.0283333333</TD>
+            <TD>-23.7224166667</TD>
+            <TD/>
+            <TD>0.0028580614</TD>
+            <TD/>
+            <TD>tcp</TD>
+            <TD>TCP J17520680-2343207</TD>
+            <TD>1788893821000.0000000000</TD>
+            <TD>2026-09-08T18:57:01</TD>
+            <TD/>
+            <TD>AC 2026abmh</TD>
+            <TD/>
+            <TD/>
+            <TD/>
+            <TD>Sagittarius</TD>
+            <TD>CBAT</TD>
+            <TD>https://astro-colibri.com/event:tcp_j17520680-2343207</TD>
+            <TD>tcp_j17520680-2343207</TD>
+            <TD/>
+            <TD/>
+            <TD/>
+            <TD/>
+            <TD>12.6000000000</TD>
+            <TD/>
+            <TD>mag</TD>
+            <TD/>
+            <TD>2.7172915936</TD>
+            <TD>http://www.cbat.eps.harvard.edu/unconf/followups/J17520680-2343207.html</TD>
+            <TD>https://storage.googleapis.com/astro-colibri-optical-lightcurve/Astro-COLIBRI_TCPJ17520680-2343207_lightcurve_created2026-09-23.png</TD>
+            <TD/>
+            <TD/>
+            <TD/>
+            <TD/>
+            <TD/>
+          </TR>
+        </TABLEDATA>
+      </DATA>
+    </TABLE>
+    <INFO name="RESOURCE_NROWS" value="2">Number of rows in result</INFO>
+  </RESOURCE>
+</VOTABLE>
