@@ -7,6 +7,7 @@ appears in this public repository or its logs.
 from __future__ import annotations
 
 import argparse
+import base64
 import html
 import json
 import logging
@@ -257,7 +258,7 @@ def _table(rows: list[dict], muted: bool = False) -> str:
     )
 
 
-def html_body(p: dict) -> str:
+def html_body(p: dict, chart_cid: str | None = None) -> str:
     e = html.escape
     w = p.get("weather", {})
     n = p["night"]
@@ -287,6 +288,13 @@ def html_body(p: dict) -> str:
             f"<div {note}>Visible tonight, V {f['mag_max']}–{low} or brightness unknown</div>",
             _table(p["watch"][:5], muted=True),
         ]
+    if chart_cid:
+        parts += [
+            f"<h2 {h2}>Sky tracks tonight</h2>",
+            f'<img src="cid:{chart_cid}" alt="Polar chart of tonight\'s target tracks" '
+            'width="560" style="display:block;width:100%;max-width:560px;height:auto;'
+            'border-radius:8px">',
+        ]
     atels = [i for i in p.get("atel_recent", []) if i.get("of_interest")]
     if atels:
         parts.append(f"<h2 {h2}>Recent ATels</h2>")
@@ -306,17 +314,36 @@ def html_body(p: dict) -> str:
     return "".join(parts)
 
 
-def send(p: dict, api_key: str, to: str) -> str:
+CHART_CID = "sky-chart"
+
+
+def message(p: dict, to: str, chart: Path | None = None) -> dict:
+    """The Resend request body; the sky chart rides along as an inline (cid:) image."""
+    has_chart = chart is not None and chart.exists()
+    msg = {
+        "from": SENDER,
+        "to": [to],
+        "subject": subject(p),
+        "text": text_body(p),
+        "html": html_body(p, CHART_CID if has_chart else None),
+    }
+    if has_chart:
+        msg["attachments"] = [
+            {
+                "content": base64.b64encode(chart.read_bytes()).decode(),
+                "filename": "sky.png",
+                "content_id": CHART_CID,
+                "content_type": "image/png",
+            }
+        ]
+    return msg
+
+
+def send(p: dict, api_key: str, to: str, chart: Path | None = None) -> str:
     resp = requests.post(
         RESEND_URL,
         headers={"Authorization": f"Bearer {api_key}"},
-        json={
-            "from": SENDER,
-            "to": [to],
-            "subject": subject(p),
-            "text": text_body(p),
-            "html": html_body(p),
-        },
+        json=message(p, to, chart),
         timeout=30,
     )
     if resp.status_code >= 300:
@@ -344,7 +371,8 @@ def main(argv: list[str] | None = None) -> int:
     if not key or not to:
         log.error("RESEND_API_KEY and EMAIL_TO secrets are both required")
         return 1
-    log.info("Sent digest, Resend id %s", send(payload, key, to))
+    chart = Path(args.json).parent / payload["sky_chart"] if payload.get("sky_chart") else None
+    log.info("Sent digest, Resend id %s", send(payload, key, to, chart))
     return 0
 
 

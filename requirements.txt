@@ -4,3 +4,4 @@ feedparser>=6.0
 astropy>=6.0
 scipy>=1.11            # astropy uses it for coordinate cross-matching
 pyyaml>=6.0
+matplotlib>=3.8        # polar sky chart in the email

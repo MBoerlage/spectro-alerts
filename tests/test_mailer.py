@@ -76,3 +76,19 @@ def test_no_targets_means_no_email(tmp_path, monkeypatch, cfg, fake_http):
     monkeypatch.setattr(mailer, "send", lambda *a: calls.append(a) or "id")
     assert mailer.main(["--json", str(f)]) == 0 and calls == []
     assert mailer.main(["--json", str(f), "--always"]) == 0 and len(calls) == 1
+
+
+def test_sky_chart_is_drawn_and_embedded_inline(cfg, fake_http, tmp_path):
+    from spectro_alerts import skychart, visibility
+
+    p = _payload(cfg)
+    night = visibility.tonight(cfg["site"], cfg["filters"]["sun_alt_max_deg"], LOCAL_DATE)
+    tracks = [{"name": t["name"], "ra": t["ra"], "dec": t["dec"]} for t in p["targets"]]
+    png = tmp_path / "sky.png"
+    assert skychart.draw(night, tracks, 20, png, "test")
+    assert png.read_bytes()[:4] == b"\x89PNG"
+    msg = mailer.message(p, "me@example.com", png)
+    assert msg["attachments"][0]["content_id"] == mailer.CHART_CID
+    assert f'src="cid:{mailer.CHART_CID}"' in msg["html"]
+    assert "attachments" not in mailer.message(p, "me@example.com", None)
+    assert not skychart.draw(night, [], 20, tmp_path / "none.png")

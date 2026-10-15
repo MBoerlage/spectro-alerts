@@ -15,7 +15,7 @@ import astropy.units as u
 import yaml
 from astropy.coordinates import Angle
 
-from . import __version__, output, visibility, weather
+from . import __version__, output, skychart, visibility, weather
 from . import state as state_mod
 from .match import attach_atel_by_name, cross_match
 from .model import SourceResult
@@ -195,6 +195,19 @@ def main(argv: list[str] | None = None) -> int:
     payload = build(cfg, results, now, local_date, state, weather_raw)
 
     docs = Path(out_cfg["docs_dir"])
+    chart = docs / "sky.png"
+    tracks = [{"name": t["name"], "ra": t["ra"], "dec": t["dec"]} for t in payload["targets"]]
+    tracks += [
+        {"name": t["name"], "ra": t["ra"], "dec": t["dec"], "dashed": True}
+        for t in payload["poorly_placed"]
+    ]
+    night = visibility.tonight(cfg["site"], cfg["filters"]["sun_alt_max_deg"], local_date)
+    title = f"Tonight's tracks · {payload['night']['date']}"
+    if skychart.draw(night, tracks, cfg["filters"]["min_alt_deg"], chart, title):
+        payload["sky_chart"] = "sky.png"
+    else:
+        chart.unlink(missing_ok=True)  # never leave yesterday's chart behind
+        payload["sky_chart"] = None
     output.write_json(docs / "candidates.json", payload)
     output.write_page(docs / "index.html", payload)
     (docs / ".nojekyll").touch()
