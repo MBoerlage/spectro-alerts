@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel rdf:about="https://www.astronomerstelegram.org/?rss">
+<title>The Astronomer's Telegram: Top ATels</title>
+<link>https://www.astronomerstelegram.org</link>
+</channel>
+<item rdf:about="https://www.astronomerstelegram.org/?read=17950">
+<title>ATel 17950: Spectroscopic classification of TCP J02191736+2857158 as a dwarf nova in outburst</title>
+<link>https://www.astronomerstelegram.org/?read=17950</link>
+<description>We obtained a spectrum of the transient TCP J02191736+2857158 (RA = 02:19:17.36, Dec = +28:57:15.8) on 2026 Oct 13. Balmer emission lines are present.</description>
+<dc:date>2026-10-13T10:00:00Z</dc:date>
+</item>
+<item rdf:about="https://www.astronomerstelegram.org/?read=17951">
+<title>ATel 17951: Optical outburst of the symbiotic star AG Dra</title>
+<link>https://www.astronomerstelegram.org/?read=17951</link>
+<description>AG Dra brightened by 1.2 mag in V over the past week.</description>
+<dc:date>2026-10-14T08:00:00Z</dc:date>
+</item>
+<item rdf:about="https://www.astronomerstelegram.org/?read=17952">
+<title>ATel 17952: Radio flaring of Cyg X-3</title>
+<link>https://www.astronomerstelegram.org/?read=17952</link>
+<description>Millimeter flaring continues; R.A. 20h32m25.78s, Decl. +40d57m27.9s.</description>
+<dc:date>2026-10-14T09:00:00Z</dc:date>
+</item>
+<item rdf:about="https://www.astronomerstelegram.org/?read=17800">
+<title>ATel 17800: An old telegram</title>
+<link>https://www.astronomerstelegram.org/?read=17800</link>
+<description>Too old to matter.</description>
+<dc:date>2026-08-01T09:00:00Z</dc:date>
+</item>
+</rdf:RDF>

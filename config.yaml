@@ -1,0 +1,39 @@
+# Spectro Alerts configuration. Edit thresholds here; no code changes needed.
+
+site:
+  name: Tomball, TX
+  lat: 30.0972        # degrees north
+  lon: -95.6161       # degrees east (negative = west)
+  height_m: 50
+  timezone: America/Chicago
+
+filters:
+  mag_max: 12.0             # brightest-enough ceiling for the StarEx LR (V); adjustable 8-12
+  watch_margin: 2.0         # objects up to mag_max + this go on the watch list
+  min_alt_deg: 20           # backyard horizon
+  min_hours: 1.0            # minimum continuous time above min_alt in darkness tonight
+  sun_alt_max_deg: -18      # astronomical darkness
+  moon_min_sep_deg: 30      # warning only, never excludes a target
+  match_radius_arcsec: 5    # positions closer than this are the same object
+
+sources:
+  cbat_tocp:
+    enabled: true
+    url: http://cbat.eps.harvard.edu/unconf/tocp.html   # plain http: https redirects back
+    max_age_days: 30
+    prefixes: [PNV, TCP]    # PSN skipped: TNS covers supernovae
+    fetch_followups: true   # read follow-up pages for objects that pass the filters
+    max_followups: 10
+  tns:
+    enabled: true
+    lookback_days: 30
+    disc_mag_max: 15.0      # discovery magnitude cut before visibility filtering
+  atel:
+    enabled: true
+    url: https://www.astronomerstelegram.org/?rss
+    lookback_days: 7
+
+output:
+  docs_dir: docs            # published by GitHub Pages
+  state_file: state/objects.json
+  state_keep_days: 90
