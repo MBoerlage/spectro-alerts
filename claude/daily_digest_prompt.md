@@ -15,6 +15,16 @@ and ask for the full JSON.
 - `weather`: the clear-sky verdict for sunset to midnight (GO / MAYBE / NO-GO / UNKNOWN), its
   one-line summary in `line`, hourly detail in `hours`, and a Clear Outside link.
 
+## 1b. TNS fallback (only if TNS failed in `source_status`)
+TNS blocks requests from GitHub's servers. WebFetch
+https://www.wis-tns.org/search?date_start%5Bdate%5D=YYYY-MM-DD&date_end%5Bdate%5D=YYYY-MM-DD&discovery_mag_max=15&num_page=500&format=csv
+with date_start 30 days before today and date_end tomorrow (UTC), and ask for every row's Name,
+RA, DEC, Obj. Type, Discovery Mag/Flux and Discovery Date verbatim. Keep rows with discovery
+magnitude ≤ `filters.mag_max` + `filters.watch_margin`. Match them to targets/watch objects by
+name or by RA/Dec within a few arcseconds. Any TNS object not already in the JSON goes in its own
+short section, "TNS, not visibility-checked", with RA/Dec, magnitude and type. Do not guess its
+visibility.
+
 ## 2. Check campaign requests
 - ARAS Eruptive Stars forum: https://www.spectro-aras.com/forum/ (recent topics only).
 - AAVSO Alert Notices: https://www.aavso.org/alert-notices (newest few).
