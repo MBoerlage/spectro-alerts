@@ -53,5 +53,5 @@ python -m spectro_alerts.run --date 2026-10-15
 
 After each run the workflow emails the digest, but only when at least one target passes every filter, through [Resend](https://resend.com)
 (`python -m spectro_alerts.mailer`; add `--dry-run` to print it instead). It needs two
-repository secrets: `RESEND_API_KEY` and `EMAIL_TO`. Manual runs have a "Email the digest"
-box to untick for silent test runs.
+repository secrets: `RESEND_API_KEY` and `EMAIL_TO`. Manual runs have a "Send a test email even
+if there are no targets" box.
