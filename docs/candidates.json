@@ -1,0 +1,260 @@
+{
+ "schema_version": 1,
+ "pipeline_version": "0.1.0",
+ "generated_utc": "2026-10-15 17:10",
+ "site": {
+  "name": "Tomball, TX",
+  "lat": 30.0972,
+  "lon": -95.6161,
+  "height_m": 50,
+  "timezone": "America/Chicago"
+ },
+ "filters": {
+  "mag_max": 10.0,
+  "watch_margin": 2.0,
+  "min_alt_deg": 20,
+  "min_hours": 1.0,
+  "sun_alt_max_deg": -18,
+  "moon_min_sep_deg": 30,
+  "match_radius_arcsec": 5
+ },
+ "weather": {
+  "verdict": "GO",
+  "line": "GO: clear 22:00-00:00, cloud \u22640%, gusts \u226412 mph; seeing 2-2.5\", transparency 4/8 (7Timer, 1 = best)",
+  "window": "18:00-00:00",
+  "clear_from": "22:00",
+  "clear_to": "00:00",
+  "hours": [
+   {
+    "hour": "18:00",
+    "cloud_eff": 23.0,
+    "cloud_low": 23.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 2.0,
+    "wind_mph": 11.3,
+    "gust_mph": 17.2,
+    "temp_f": 87.3,
+    "dew_point_f": 67.0,
+    "clear": false,
+    "why_not": "cloud 23%, gusts 17 mph"
+   },
+   {
+    "hour": "19:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 1.0,
+    "wind_mph": 11.4,
+    "gust_mph": 20.6,
+    "temp_f": 83.0,
+    "dew_point_f": 67.7,
+    "clear": false,
+    "why_not": "gusts 21 mph"
+   },
+   {
+    "hour": "20:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 9.4,
+    "gust_mph": 22.4,
+    "temp_f": 80.2,
+    "dew_point_f": 68.7,
+    "clear": false,
+    "why_not": "gusts 22 mph"
+   },
+   {
+    "hour": "21:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 7.2,
+    "gust_mph": 20.1,
+    "temp_f": 78.7,
+    "dew_point_f": 66.9,
+    "clear": false,
+    "why_not": "gusts 20 mph"
+   },
+   {
+    "hour": "22:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 1.5,
+    "gust_mph": 11.9,
+    "temp_f": 76.9,
+    "dew_point_f": 70.3,
+    "clear": true,
+    "why_not": ""
+   },
+   {
+    "hour": "23:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 1.6,
+    "gust_mph": 6.9,
+    "temp_f": 75.8,
+    "dew_point_f": 70.6,
+    "clear": true,
+    "why_not": ""
+   }
+  ],
+  "seven_timer": {
+   "points": [
+    {
+     "time_utc": "2026-10-16 00:00",
+     "cloud_max_pct": 19,
+     "seeing": 7,
+     "transparency": 4,
+     "prec_type": "none",
+     "clear": true
+    },
+    {
+     "time_utc": "2026-10-16 03:00",
+     "cloud_max_pct": 6,
+     "seeing": 7,
+     "transparency": 5,
+     "prec_type": "none",
+     "clear": true
+    },
+    {
+     "time_utc": "2026-10-16 06:00",
+     "cloud_max_pct": 6,
+     "seeing": 8,
+     "transparency": 6,
+     "prec_type": "none",
+     "clear": true
+    }
+   ],
+   "mostly_clear": true,
+   "seeing_best": 7,
+   "seeing_arcsec": "2-2.5",
+   "transparency_best": 4
+  },
+  "errors": {},
+  "clear_outside_url": "https://clearoutside.com/forecast/30.10/-95.62",
+  "thresholds": {
+   "enabled": true,
+   "window": "sunset to midnight local",
+   "max_cloud_pct": 20,
+   "high_cloud_weight": 0.5,
+   "max_rain_pct": 10,
+   "max_gust_mph": 15,
+   "min_clear_hours": 1,
+   "seven_timer": true
+  }
+ },
+ "night": {
+  "date": "2026-10-15",
+  "sunset": "18:55",
+  "dark_start": "20:15",
+  "dark_end": "06:05"
+ },
+ "source_status": [
+  {
+   "source": "CBAT TOCP",
+   "ok": true,
+   "error": "",
+   "fetched": 2694,
+   "candidates": 11
+  },
+  {
+   "source": "TNS",
+   "ok": true,
+   "error": "",
+   "fetched": 5,
+   "candidates": 5
+  },
+  {
+   "source": "ATel",
+   "ok": true,
+   "error": "",
+   "fetched": 10,
+   "candidates": 0
+  }
+ ],
+ "targets": [],
+ "watch": [],
+ "atel_recent": [
+  {
+   "title": "ATel 18104: Fermi-LAT detection of renewed gamma-ray activity from the FSRQ CTA 102",
+   "url": "https://www.astronomerstelegram.org/?read=18104",
+   "published": "2026-10-13T18:03:03+00:00",
+   "names": [],
+   "of_interest": false,
+   "summary": "The Large Area Telescope (LAT), one of the two instruments on the Fermi Gamma-ray Space Telescope, has observed renewed gamma-ray activity from a source positionally consistent with the flat-spectrum radio quasar CTA 102, also known as 4FGL J2232.6+1143 (Abdollahi et al. ..."
+  },
+  {
+   "title": "ATel 18103: Sloan g'r'i' Photometry of the Type Ic-BL SN 2026acxa",
+   "url": "https://www.astronomerstelegram.org/?read=18103",
+   "published": "2026-10-13T12:53:15+00:00",
+   "names": [
+    "SN 2026acxa"
+   ],
+   "of_interest": false,
+   "summary": "We report optical photometric observations of SN 2026acxa, obtained on 2026 October 01 UT with the 0.6m telescope at Ckoirama Observatory, Universidad de Antofagasta, Chile. ..."
+  },
+  {
+   "title": "ATel 18102: Gaia20dsz: superhumps detected during a new superoutburst",
+   "url": "https://www.astronomerstelegram.org/?read=18102",
+   "published": "2026-10-12T18:58:20+00:00",
+   "names": [
+    "AT 2020rgw",
+    "Gaia20dsz"
+   ],
+   "of_interest": true,
+   "summary": "The next superoutburst of Gaia20dsz/AT 2020rgw was predicted by our Outbursts Alerting System to occur within MJD 61309-61324. Based on this prediction, we initiated time-resolved photometric observations to monitor the expected outburst and search for superhumps. ..."
+  },
+  {
+   "title": "ATel 18101: MAXI/GSC detection of XTE J1810-189 in outburst",
+   "url": "https://www.astronomerstelegram.org/?read=18101",
+   "published": "2026-10-12T01:42:37+00:00",
+   "names": [],
+   "of_interest": true,
+   "summary": "XTE J1810-189 was discovered in March 2008 during the RXTE PCA galactic ridge scan survey (Markwardt & Swank ATel #1424), and was soon found to be a neutron star X-ray binary through the detection of an X-ray burst (Markwardt et al. ..."
+  },
+  {
+   "title": "ATel 18100: LS V +44 17: Upper limits from a neutrino search with IceCube",
+   "url": "https://www.astronomerstelegram.org/?read=18100",
+   "published": "2026-10-10T21:01:39+00:00",
+   "names": [],
+   "of_interest": true,
+   "summary": "The IceCube Collaboration (http://icecube.wisc.edu/) reports: IceCube has performed a search for track-like muon neutrino events arriving from the direction of the Be/X-ray binary pulsar LS V +44 17 following reports of X-ray brightening and outbursts by EP-WXT (ATel #18063), Fermi GBM (ATel #18067), MAXI/GSC (ATel #18071), and XSPECT (ATel #18089). ..."
+  },
+  {
+   "title": "ATel 18099: The Swift follow-up of EP260531a refines its sky position",
+   "url": "https://www.astronomerstelegram.org/?read=18099",
+   "published": "2026-10-09T14:57:56+00:00",
+   "names": [],
+   "of_interest": false,
+   "summary": "A Swift ToO observation of the X-ray transient EP260531a (ATel #17828) was performed on 28 September 2026 (net exposure time of 1.6 ks) to refine its sky position. ..."
+  },
+  {
+   "title": "ATel 18098: 2026 May Keck/LRIS imaging of interstellar comet 3I/ATLAS",
+   "url": "https://www.astronomerstelegram.org/?read=18098",
+   "published": "2026-10-09T03:55:09+00:00",
+   "names": [],
+   "of_interest": false,
+   "summary": "We observed 3I/ATLAS with the Low Resolution Imaging Spectrometer (LRIS) on the 10-m Keck I telescope atop Maunakea on 2026 May 15, 05:56:01-06:41:40 UTC (N041; PI I. ..."
+  },
+  {
+   "title": "ATel 18097: Extreme Velocity Gradients in the Atmosphere of Betelgeuse: Is Another Dimming Event Imminent?",
+   "url": "https://www.astronomerstelegram.org/?read=18097",
+   "published": "2026-10-08T18:50:15+00:00",
+   "names": [],
+   "of_interest": false,
+   "summary": "Red supergiant Betelgeuse (Alpha Ori; HD 39801; MI1-2 Iab) underwent a historical Great Dimming event during 2019/2020, reaching a minimum of V ~ 1.6 mag in February 2020 (see ATel #13341, #13365, #13410, #13439,\u00c2 #13512,\u00c2 #13518,\u00c2 #13601, #13901, #13982, #15240, #16001, and #16501), close to the brightness minimum of the long secondary period (LSP). ..."
+  }
+ ]
+}
