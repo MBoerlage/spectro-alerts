@@ -55,3 +55,13 @@ After each run the workflow emails the digest, but only when at least one target
 (`python -m spectro_alerts.mailer`; add `--dry-run` to print it instead). It needs two
 repository secrets: `RESEND_API_KEY` and `EMAIL_TO`. Manual runs have a "Email the digest"
 box to untick for silent test runs.
+
+## TNS stand-ins
+
+TNS blocks GitHub's servers, so it is switched off in `config.yaml` until a TNS bot key is
+available. Two sources cover what it gave:
+
+- **Rochester "Latest Supernovae"** (David Bishop): bright supernovae and extragalactic novae
+  with their *latest* magnitude, from the machine-readable active list.
+- **Koji Mukai's galactic nova list** (NASA GSFC): confirmed galactic novae with official names
+  and links to ARAS spectra, including novae reported only to TNS.

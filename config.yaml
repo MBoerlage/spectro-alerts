@@ -25,9 +25,17 @@ sources:
     fetch_followups: true   # read follow-up pages for objects that pass the filters
     max_followups: 10
   tns:
-    enabled: true
+    enabled: false          # TNS blocks GitHub's servers; Rochester + Mukai stand in (2026-10-15)
     lookback_days: 30
     disc_mag_max: 15.0      # discovery magnitude cut before visibility filtering
+  rochester:                # bright supernovae + extragalactic novae, with latest magnitudes
+    enabled: true
+    url: https://www.rochesterastronomy.org/snimages/snactive.html
+    max_age_days: 30        # skip objects not observed for this long
+  mukai:                    # confirmed galactic novae, incl. TNS-only ones
+    enabled: true
+    url: https://asd.gsfc.nasa.gov/Koji.Mukai/novae/novae.html
+    lookback_days: 30       # by discovery date, same window as CBAT
   atel:
     enabled: true
     url: https://www.astronomerstelegram.org/?rss

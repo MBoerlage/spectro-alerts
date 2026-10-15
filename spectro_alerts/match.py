@@ -13,7 +13,8 @@ from astropy.coordinates import SkyCoord
 from .model import Candidate
 
 # Earlier entries win as the object's display name when several sources report it.
-SOURCE_PRIORITY = ["CBAT TOCP", "TNS", "ATel"]
+# Mukai first: it carries the official name (e.g. V488 Sge) once a nova is confirmed.
+SOURCE_PRIORITY = ["Mukai novae", "CBAT TOCP", "TNS", "Rochester", "ATel"]
 
 
 @dataclass
@@ -71,6 +72,10 @@ class TargetObject:
                 r.extra.get("spectroscopically_confirmed") for r in self.reports
             ),
             "has_atel": any(r.source == "ATel" for r in self.reports),
+            "confirmed_nova": any(r.source == "Mukai novae" for r in self.reports),
+            "aras_url": next(
+                (r.extra["aras_url"] for r in self.reports if r.extra.get("aras_url")), ""
+            ),
         }
 
 

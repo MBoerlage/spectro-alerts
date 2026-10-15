@@ -27,7 +27,7 @@ PAGE_URL = "https://mboerlage.github.io/spectro-alerts/"
 def _mag(t: dict) -> str:
     if t["mag"] is None:
         return "mag ?"
-    kind = " (discovery)" if t.get("mag_kind") == "discovery" else ""
+    kind = f" ({t['mag_kind']})" if t.get("mag_kind") else ""
     return f"{t['mag']:.1f} {t.get('mag_band') or ''}{kind}".strip()
 
 
@@ -58,6 +58,8 @@ def _links(t: dict) -> list[tuple[str, str]]:
         if r.get("url") and r["url"] not in seen:
             seen.add(r["url"])
             out.append((r["source"], r["url"]))
+    if t.get("aras_url"):
+        out.append(("ARAS spectra", t["aras_url"]))
     return out
 
 
@@ -229,7 +231,9 @@ def _table(rows: list[dict], muted: bool = False) -> str:
         badges = ""
         if t.get("is_new"):
             badges += _badge("NEW", "#1a73e8")
-        if t.get("spectroscopically_confirmed"):
+        if t.get("confirmed_nova"):
+            badges += _badge("confirmed nova", "#c5221f")
+        elif t.get("spectroscopically_confirmed"):
             badges += _badge("spectrum", "#7b1fa2")
         if t.get("has_atel"):
             badges += _badge("ATel", "#5f6368")
@@ -246,7 +250,8 @@ def _table(rows: list[dict], muted: bool = False) -> str:
             f'<span style="font-size:12px;color:#5f6368">{sub}<br>'
             f"{t['ra_hms'][:8]} {t['dec_dms'][:9]}</span></td>"
             f'<td style="{TD};white-space:nowrap"><b>{mag}</b><br>'
-            f'<span style="font-size:12px;color:#5f6368">{band}</span></td>'
+            f'<span style="font-size:12px;color:#5f6368">{band} {e(t.get("mag_kind") or "")}'
+            "</span></td>"
             f'<td style="{TD};white-space:nowrap">{v["start"] or "-"}–{v["end"] or "-"}<br>'
             f'<span style="font-size:12px;color:#5f6368">{v["hours"]:.1f} h</span></td>'
             f'<td style="{TD};white-space:nowrap">{v["max_alt"] or 0:.0f}°<br>'
