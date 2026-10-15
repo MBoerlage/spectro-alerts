@@ -183,7 +183,14 @@ def _longest_clear(hours: list[dict]) -> tuple[int, int]:
     return best
 
 
-def assess(raw: dict, sunset: datetime | None, site: dict, cfg: dict) -> dict:
+def assess(
+    raw: dict,
+    sunset: datetime | None,
+    site: dict,
+    cfg: dict,
+    sunrise: datetime | None = None,
+) -> dict:
+    """Verdict for sunset to midnight; hours_night also lists every hour until sunrise."""
     tz = ZoneInfo(site["timezone"])
     co_url = f"https://clearoutside.com/forecast/{site['lat']:.2f}/{site['lon']:.2f}"
     out = {
@@ -193,6 +200,7 @@ def assess(raw: dict, sunset: datetime | None, site: dict, cfg: dict) -> dict:
         "clear_from": None,
         "clear_to": None,
         "hours": [],
+        "hours_night": [],
         "seven_timer": None,
         "errors": raw.get("errors", {}),
         "clear_outside_url": co_url,
@@ -215,6 +223,18 @@ def assess(raw: dict, sunset: datetime | None, site: dict, cfg: dict) -> dict:
     if raw.get("open_meteo"):
         try:
             out["hours"] = assess_open_meteo(raw["open_meteo"], start, end, tz, cfg)
+            # Extra info for the email table: on to the hour that contains sunrise.
+            night_end = (
+                sunrise.replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
+                if sunrise
+                else end
+            )
+            out["hours_night"] = [
+                {**h, "in_verdict": i < len(out["hours"])}
+                for i, h in enumerate(
+                    assess_open_meteo(raw["open_meteo"], start, max(end, night_end), tz, cfg)
+                )
+            ]
         except (KeyError, ValueError) as exc:
             out["errors"]["Open-Meteo"] = f"unreadable: {exc}"
 

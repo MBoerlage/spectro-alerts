@@ -36,9 +36,9 @@ def test_full_build_targets_watch_and_state(cfg, fake_http):
     # Sgr nova candidate is low in the SW after nautical twilight but still gets over 1 h.
     sgr = next(t for t in payload["targets"] if "J18251276" in t["name"])
     assert 1.0 <= sgr["visibility"]["hours"] < 2.5 and sgr["visibility"]["start"] == "19:45"
-    # SN 2026afaa (13.9, Coma) is a daytime object in October: listed as poorly placed
-    # because the test ceiling is V 12 + 2.
-    assert [t["name"] for t in payload["poorly_placed"]] == ["SN 2026afaa"]
+    # SN 2026afaa (13.9, Coma) is a daytime object in October: never up, so skipped.
+    assert payload["poorly_placed"] == []
+    assert any(s["name"] == "SN 2026afaa" for s in payload["skipped"])
     # 12.2 mag And transient: just fainter than V 12 -> watch list.
     assert any(t["name"] == "TCP J00560713+4301406" for t in payload["watch"])
     # ATel-only objects (Cyg X-3) are news, not targets.

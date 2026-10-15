@@ -11,16 +11,22 @@ def _payload(cfg):
 
 def test_subject_and_bodies_cover_every_section(cfg, fake_http):
     p = _payload(cfg)
-    p["weather"] = {"verdict": "GO", "line": "GO: clear 21:00-00:00", "clear_outside_url": "x"}
+    p["weather"] = {
+        "verdict": "GO",
+        "line": "GO: clear 21:00-00:00",
+        "clear_from": "21:00",
+        "clear_to": "00:00",
+        "clear_outside_url": "x",
+    }
     assert mailer.subject(p) == "SPECTRO ALERT: YES, good skies? YES"
     p["weather"]["verdict"] = "MAYBE"
     assert mailer.subject(p) == "SPECTRO ALERT: YES, good skies? MAYBE"
     p["weather"]["verdict"] = "GO"
     text = mailer.text_body(p)
     assert "TCP J02191736+2857158" in text and "spectrum already reported" in text
-    assert "Bright but poorly placed" in text and "SN 2026afaa" in text
+    assert "TCP J00560713+4301406" in text  # watch list
     html = mailer.html_body(p)
-    assert "GO: clear 21:00-00:00" in html and "<b>TCP J02191736+2857158</b>" in html
+    assert "Clear skies · clear 21:00–00:00" in html and "<b>TCP J02191736+2857158</b>" in html
 
 
 def test_send_posts_to_resend_and_reports_errors(cfg, fake_http, monkeypatch):
@@ -70,3 +76,19 @@ def test_no_targets_means_no_email(tmp_path, monkeypatch, cfg, fake_http):
     monkeypatch.setattr(mailer, "send", lambda *a: calls.append(a) or "id")
     assert mailer.main(["--json", str(f)]) == 0 and calls == []
     assert mailer.main(["--json", str(f), "--always"]) == 0 and len(calls) == 1
+
+
+def test_sky_chart_is_drawn_and_embedded_inline(cfg, fake_http, tmp_path):
+    from spectro_alerts import skychart, visibility
+
+    p = _payload(cfg)
+    night = visibility.tonight(cfg["site"], cfg["filters"]["sun_alt_max_deg"], LOCAL_DATE)
+    tracks = [{"name": t["name"], "ra": t["ra"], "dec": t["dec"]} for t in p["targets"]]
+    png = tmp_path / "sky.png"
+    assert skychart.draw(night, tracks, 20, png, "test")
+    assert png.read_bytes()[:4] == b"\x89PNG"
+    msg = mailer.message(p, "me@example.com", png)
+    assert msg["attachments"][0]["content_id"] == mailer.CHART_CID
+    assert f'src="cid:{mailer.CHART_CID}"' in msg["html"]
+    assert "attachments" not in mailer.message(p, "me@example.com", None)
+    assert not skychart.draw(night, [], 20, tmp_path / "none.png")

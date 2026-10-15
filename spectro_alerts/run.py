@@ -15,7 +15,7 @@ import astropy.units as u
 import yaml
 from astropy.coordinates import Angle
 
-from . import __version__, output, visibility, weather
+from . import __version__, output, skychart, visibility, weather
 from . import state as state_mod
 from .match import attach_atel_by_name, cross_match
 from .model import SourceResult
@@ -90,7 +90,7 @@ def build(
 
     wcfg = cfg.get("weather", {})
     if weather_raw is not None and wcfg.get("enabled", True):
-        sky = weather.assess(weather_raw, night.sunset, cfg["site"], wcfg)
+        sky = weather.assess(weather_raw, night.sunset, cfg["site"], wcfg, night.sunrise)
     else:
         sky = {"verdict": "UNKNOWN", "line": "weather check disabled", "hours": []}
 
@@ -100,7 +100,10 @@ def build(
     for obj, v in zip(objects, vis, strict=True):
         best = obj.best_mag
         mag = best.mag if best else None
-        if v["hours"] < f["min_hours"] and not (mag is not None and mag <= low_limit):
+        # Short-window objects are listed only if there is some window at all tonight.
+        if v["hours"] < f["min_hours"] and not (
+            mag is not None and mag <= low_limit and v["hours"] > 0
+        ):
             # Kept in the JSON so "why didn't I see X?" can be answered from the file.
             skipped.append(
                 {
@@ -145,6 +148,7 @@ def build(
         "night": {
             "date": local_date.strftime("%Y-%m-%d"),
             "sunset": night.sunset.strftime("%H:%M") if night.sunset else None,
+            "sunrise": night.sunrise.strftime("%H:%M") if night.sunrise else None,
             "dark_start": night.dark_start.strftime("%H:%M") if night.dark_start else None,
             "dark_end": night.dark_end.strftime("%H:%M") if night.dark_end else None,
         },
@@ -192,6 +196,19 @@ def main(argv: list[str] | None = None) -> int:
     payload = build(cfg, results, now, local_date, state, weather_raw)
 
     docs = Path(out_cfg["docs_dir"])
+    chart = docs / "sky.png"
+    tracks = [{"name": t["name"], "ra": t["ra"], "dec": t["dec"]} for t in payload["targets"]]
+    tracks += [
+        {"name": t["name"], "ra": t["ra"], "dec": t["dec"], "dashed": True}
+        for t in payload["poorly_placed"]
+    ]
+    night = visibility.tonight(cfg["site"], cfg["filters"]["sun_alt_max_deg"], local_date)
+    title = f"Tonight's tracks · {payload['night']['date']}"
+    if skychart.draw(night, tracks, cfg["filters"]["min_alt_deg"], chart, title):
+        payload["sky_chart"] = "sky.png"
+    else:
+        chart.unlink(missing_ok=True)  # never leave yesterday's chart behind
+        payload["sky_chart"] = None
     output.write_json(docs / "candidates.json", payload)
     output.write_page(docs / "index.html", payload)
     (docs / ".nojekyll").touch()
