@@ -29,7 +29,7 @@ jobs:
           i=0
           for u in $URLS; do
             i=$((i+1))
-            code=$(curl -sS -L -A "${UA:-SpectroAlerts/0.1 (+https://github.com/MBoerlage/spectro-alerts)}" \
+            code=$(curl -sS -L --max-time 60 -A "${UA:-SpectroAlerts/0.1 (+https://github.com/MBoerlage/spectro-alerts)}" \
               -o "page$i.html" -w "%{http_code} %{url_effective} %{content_type}" "$u" || echo "curl-failed")
             echo "page$i.html $code $u" >> index.txt
           done
