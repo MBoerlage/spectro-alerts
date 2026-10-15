@@ -177,39 +177,42 @@ def _weather_html(w: dict) -> str:
         )
         + "</td></tr></table>"
     ]
-    hours = w.get("hours", [])
+    hours = w.get("hours_night") or w.get("hours", [])
     if hours:
+        cell = "padding:4px 2px;text-align:center;font-size:12px"
 
-        def row(label: str, key: str, fmt: str, unit: str = "") -> str:
+        def row(label: str, key: str) -> str:
             cells = "".join(
-                f'<td style="padding:5px 6px;text-align:center;font-size:13px;'
-                f'background:{GOOD if h["clear"] else BAD}">{fmt.format(h[key])}{unit}</td>'
+                f'<td style="{cell};background:{GOOD if h["clear"] else BAD}">{h[key]:.0f}</td>'
                 for h in hours
             )
             return (
-                f'<tr><td style="padding:5px 8px;font-size:12px;color:#5f6368;'
+                f'<tr><td style="padding:4px 6px 4px 0;font-size:12px;color:#5f6368;'
                 f'white-space:nowrap">{label}</td>{cells}</tr>'
             )
 
+        # Hours that count for the verdict (sunset to midnight) are bold; the rest is extra.
         head = "".join(
-            f'<td style="padding:5px 6px;text-align:center;font-size:12px;font-weight:600">'
+            f'<td style="{cell};font-weight:{700 if h.get("in_verdict", True) else 400};'
+            f'color:{"#202124" if h.get("in_verdict", True) else "#80868b"}">'
             f"{h['hour'][:2]}</td>"
             for h in hours
         )
         out.append(
-            '<table cellpadding="0" cellspacing="2" style="border-collapse:separate;'
-            'margin:0 0 4px">'
-            f'<tr><td style="padding:5px 8px;font-size:12px;color:#5f6368">Hour</td>{head}</tr>'
-            + row("Cloud", "cloud_eff", "{:.0f}", "%")
-            + row("Rain", "rain_pct", "{:.0f}", "%")
-            + row("Gusts", "gust_mph", "{:.0f}")
+            '<table width="100%" cellpadding="0" cellspacing="2" '
+            'style="border-collapse:separate;margin:0 0 4px;table-layout:fixed">'
+            f'<tr><td style="padding:4px 6px 4px 0;font-size:12px;color:#5f6368;width:52px">'
+            f"Hour</td>{head}</tr>"
+            + row("Cloud %", "cloud_eff")
+            + row("Rain %", "rain_pct")
+            + row("Gust mph", "gust_mph")
             + "</table>"
         )
         t = w.get("thresholds", {})
         out.append(
             f'<div style="font-size:12px;color:#5f6368;margin:0 0 4px">Green = clear: cloud '
             f"≤{t.get('max_cloud_pct', 20)}%, rain ≤{t.get('max_rain_pct', 10)}%, gusts "
-            f"≤{t.get('max_gust_mph', 15)} mph. "
+            f"≤{t.get('max_gust_mph', 15)} mph. Bold hours (sunset–midnight) set the verdict. "
             f'<a href="{e(w.get("clear_outside_url", ""))}">Clear Outside</a></div>'
         )
     return "".join(out)
@@ -269,7 +272,8 @@ def html_body(p: dict, chart_cid: str | None = None) -> str:
     parts = [
         f'<div style="{FONT};color:#202124;max-width:680px;margin:0 auto">',
         _weather_html(w),
-        f"<div {note}>Sunset {n['sunset']} · observing {n['dark_start']}–{n['dark_end']} "
+        f"<div {note}>Sunset {n['sunset']} · sunrise {n.get('sunrise') or '-'} · "
+        f"observing {n['dark_start']}–{n['dark_end']} "
         f"(Sun below {abs(f['sun_alt_max_deg'])}°) · Tomball</div>",
         f"<h2 {h2}>Targets tonight ({len(p['targets'])})</h2>",
         f"<div {note}>V ≤ {f['mag_max']}, at least {f['min_hours']} h above "

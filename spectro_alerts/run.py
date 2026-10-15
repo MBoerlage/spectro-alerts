@@ -90,7 +90,7 @@ def build(
 
     wcfg = cfg.get("weather", {})
     if weather_raw is not None and wcfg.get("enabled", True):
-        sky = weather.assess(weather_raw, night.sunset, cfg["site"], wcfg)
+        sky = weather.assess(weather_raw, night.sunset, cfg["site"], wcfg, night.sunrise)
     else:
         sky = {"verdict": "UNKNOWN", "line": "weather check disabled", "hours": []}
 
@@ -148,6 +148,7 @@ def build(
         "night": {
             "date": local_date.strftime("%Y-%m-%d"),
             "sunset": night.sunset.strftime("%H:%M") if night.sunset else None,
+            "sunrise": night.sunrise.strftime("%H:%M") if night.sunrise else None,
             "dark_start": night.dark_start.strftime("%H:%M") if night.dark_start else None,
             "dark_end": night.dark_end.strftime("%H:%M") if night.dark_end else None,
         },

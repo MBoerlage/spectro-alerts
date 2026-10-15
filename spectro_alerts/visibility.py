@@ -36,6 +36,15 @@ class Night:
         return self.times[idx[0]].to_datetime(timezone=self.tz) if idx.size else None
 
     @property
+    def sunrise(self) -> datetime | None:
+        """First sample after sunset with the Sun's upper limb back above the horizon."""
+        down = np.flatnonzero(self.sun_alt < -0.833)
+        if not down.size:
+            return None
+        up = np.flatnonzero(self.sun_alt[down[0] :] >= -0.833)
+        return self.times[down[0] + up[0]].to_datetime(timezone=self.tz) if up.size else None
+
+    @property
     def dark_start(self) -> datetime | None:
         idx = np.flatnonzero(self.dark)
         return self.times[idx[0]].to_datetime(timezone=self.tz) if idx.size else None

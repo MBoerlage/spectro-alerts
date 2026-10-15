@@ -65,3 +65,15 @@ def test_fetch_and_build_include_weather(cfg, fake_http):
     payload = run.build(cfg, run.collect(cfg, NOW), NOW, LOCAL_DATE, {"objects": {}}, raw)
     assert payload["weather"]["verdict"] == "GO"
     assert payload["night"]["sunset"].startswith("18:")
+
+
+def test_hours_night_runs_to_sunrise_but_verdict_stays_evening(cfg):
+    sunrise = SUNSET.replace(day=SUNSET.day + 1, hour=7, minute=24)
+    w = weather.assess(_raw(), SUNSET, SITE, cfg["weather"], sunrise)
+    night = w["hours_night"]
+    assert night[0]["hour"] == w["hours"][0]["hour"] and night[-1]["hour"] == "07:00"
+    assert len(night) > len(w["hours"])
+    assert all(h["in_verdict"] for h in night[: len(w["hours"])])
+    assert not any(h["in_verdict"] for h in night[len(w["hours"]) :])
+    # Same verdict as without the extra hours.
+    assert w["verdict"] == weather.assess(_raw(), SUNSET, SITE, cfg["weather"])["verdict"]
