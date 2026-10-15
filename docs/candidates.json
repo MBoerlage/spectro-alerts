@@ -1,7 +1,7 @@
 {
  "schema_version": 1,
  "pipeline_version": "0.1.0",
- "generated_utc": "2026-10-15 18:02",
+ "generated_utc": "2026-10-15 18:11",
  "site": {
   "name": "Tomball, TX",
   "lat": 30.0972,
@@ -186,17 +186,61 @@
  ],
  "targets": [],
  "watch": [],
- "poorly_placed": [],
- "skipped": [
+ "poorly_placed": [
   {
+   "id": null,
    "name": "TCP J17541876-2736362",
+   "names": [
+    "TCP J17541876-2736362"
+   ],
+   "obj_type": "transient",
+   "ra": 268.578167,
+   "dec": -27.610056,
+   "ra_hms": "17:54:18.76",
+   "dec_dms": "-27:36:36.2",
    "mag": 10.8,
-   "band": "unfiltered",
-   "hours": 0.67,
-   "max_alt": 25.0,
-   "reason": "under 1.0 h above 20 deg; fainter than V 10.0"
+   "mag_band": "unfiltered",
+   "mag_kind": "discovery",
+   "mag_source": "CBAT TOCP",
+   "disc_date": "2026-10-12T09:34:59.520000+00:00",
+   "first_source": "CBAT TOCP",
+   "is_new": null,
+   "first_seen_by_pipeline": null,
+   "visibility": {
+    "hours": 0.67,
+    "start": "19:45",
+    "end": "20:25",
+    "max_alt": 25.0,
+    "max_alt_time": "19:45",
+    "moon_sep": 113.1,
+    "moon_illum": 0.26
+   },
+   "moon_warning": false,
+   "reports": [
+    {
+     "name": "TCP J17541876-2736362",
+     "ra": 268.5781666666667,
+     "dec": -27.610055555555558,
+     "source": "CBAT TOCP",
+     "url": "http://cbat.eps.harvard.edu/unconf/followups/J17541876-2736362.html",
+     "mag": 10.8,
+     "band": "unfiltered",
+     "mag_kind": "discovery",
+     "disc_date": "2026-10-12T09:34:59.520000+00:00",
+     "obj_type": "transient",
+     "extra": {
+      "band_letter": "U",
+      "columns": "Sgr       I 0",
+      "followup_summary": "same instruments. --- Isao Endoh (NAOJ) 2026 10 12.5371 Position end figures 18s.84, 35.8\" measured with 0.35m reflector + CCD camera at Perth Observatory, Bickley, W. Australia. J2000, Gaia DR2 positions. Transient appears to be located at same position as Gaia star 4063498834054665600 (G mag 15.9). Low amplitude, possibly a CV? Photometry - B = 11.44, V = 10.69, R = 9.75, I = 9.55. Andrew Pearce, Nedlands, Western Australia 2026 10 13.377 Mag = 8.4 : 0.5-m F/6.0 + CCD (KAF-1001E) , K.Itagaki 2026 10 14.400 Mag=7.8 : http://k-itagaki.jp/images/sgr-2026-10-14.jpg 2026 10 14.4150 TG= 8.4, T. Yusa, Osaki, Miyagi, Japan; stacked G-band images with a ZWO Seestar 0.05-m f/5 All-in-One Smart Telescope; limiting mag 15.5; APASS Catalogue V-band reference stars. Position end figures 18s.85, 35.9\".",
+      "spectroscopically_confirmed": false
+     }
+    }
+   ],
+   "spectroscopically_confirmed": false,
+   "has_atel": false
   }
  ],
+ "skipped": [],
  "atel_recent": [
   {
    "title": "ATel 18105: Fermi-LAT detection of enhanced gamma-ray activity from the BL Lac source MG2 J130304+2434",
