@@ -1,7 +1,7 @@
 {
  "schema_version": 1,
  "pipeline_version": "0.1.0",
- "generated_utc": "2026-10-15 17:59",
+ "generated_utc": "2026-10-15 18:02",
  "site": {
   "name": "Tomball, TX",
   "lat": 30.0972,
@@ -187,6 +187,16 @@
  "targets": [],
  "watch": [],
  "poorly_placed": [],
+ "skipped": [
+  {
+   "name": "TCP J17541876-2736362",
+   "mag": 10.8,
+   "band": "unfiltered",
+   "hours": 0.67,
+   "max_alt": 25.0,
+   "reason": "under 1.0 h above 20 deg; fainter than V 10.0"
+  }
+ ],
  "atel_recent": [
   {
    "title": "ATel 18105: Fermi-LAT detection of enhanced gamma-ray activity from the BL Lac source MG2 J130304+2434",
