@@ -9,6 +9,7 @@ from __future__ import annotations
 import csv
 import io
 import logging
+import time
 from datetime import datetime, timedelta, timezone
 
 from .. import http
@@ -93,10 +94,19 @@ def fetch(cfg: dict, now: datetime) -> SourceResult:
         "num_page": 500,
         "format": "csv",
     }
-    try:
-        rows = parse_csv(http.get(SEARCH_URL, params=params).text)
-    except Exception as exc:  # noqa: BLE001
-        log.error("TNS fetch failed: %s", exc)
-        return SourceResult(source=SOURCE, ok=False, error=str(exc))
+    # The public search throttles bursts (403 after several runs within minutes, 2026-10-15).
+    # One polite retry after a pause, then report the failure; the run carries on without TNS.
+    rows, errors = None, []
+    for attempt in range(2):
+        if attempt:
+            time.sleep(cfg.get("retry_wait_s", 45))
+        try:
+            rows = parse_csv(http.get(SEARCH_URL, params=params).text)
+            break
+        except Exception as exc:  # noqa: BLE001
+            errors.append(str(exc))
+            log.warning("TNS attempt %d failed: %s", attempt + 1, exc)
+    if rows is None:
+        return SourceResult(source=SOURCE, ok=False, error=errors[-1])
     cands = rows_to_candidates(rows, cfg.get("disc_mag_max", 15.0), since)
     return SourceResult(source=SOURCE, candidates=cands, fetched=len(rows))

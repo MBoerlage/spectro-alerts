@@ -69,8 +69,22 @@ def test_tns_csv_filters_by_discovery_mag_and_bad_coords(cfg, fake_http):
 
 def test_tns_non_csv_response_marks_source_failed(cfg, monkeypatch):
     monkeypatch.setattr(http, "get", lambda *a, **k: SimpleNamespace(text="<html>blocked"))
-    res = tns.fetch(cfg["sources"]["tns"], NOW)
+    res = tns.fetch(dict(cfg["sources"]["tns"], retry_wait_s=0), NOW)
     assert not res.ok
+
+
+def test_tns_retries_once_after_a_403(cfg, monkeypatch):
+    calls = []
+
+    def flaky(url, params=None, timeout=30):
+        calls.append(url)
+        if len(calls) == 1:
+            raise ConnectionError("403 Client Error: Forbidden")
+        return SimpleNamespace(text=(FIX / "tns.csv").read_text())
+
+    monkeypatch.setattr(http, "get", flaky)
+    res = tns.fetch(dict(cfg["sources"]["tns"], retry_wait_s=0), NOW)
+    assert res.ok and len(calls) == 2 and res.candidates
 
 
 def test_atel_items_coords_and_lookback():
