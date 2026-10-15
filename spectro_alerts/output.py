@@ -110,7 +110,7 @@ small{{opacity:.7}} .meta{{opacity:.75;font-size:13px}}
 table.wx{{width:auto}} table.wx td,table.wx th{{text-align:center;padding:4px 8px;border:0}}
 </style></head><body>
 <h1>Spectro Alerts · {html.escape(payload["site"]["name"])}</h1>
-<p class="meta">Generated {payload["generated_utc"]} UTC · darkness {night["dark_start"]} to
+<p class="meta">Generated {payload["generated_utc"]} UTC · observing time {night["dark_start"]} to
 {night["dark_end"]} · V ≤ {payload["filters"]["mag_max"]}, at least
 {payload["filters"]["min_hours"]} h above {payload["filters"]["min_alt_deg"]}°</p>
 {_weather_block(payload.get("weather", {}))}
@@ -118,6 +118,10 @@ table.wx{{width:auto}} table.wx td,table.wx th{{text-align:center;padding:4px 8p
 <h2>Watch list ({len(payload["watch"])})</h2>
 <p class="meta">Visible tonight but fainter than the ceiling, or brightness unknown.</p>
 {table(payload["watch"])}
+<h2>Bright but poorly placed ({len(payload.get("poorly_placed", []))})</h2>
+<p class="meta">Bright enough, but less than {payload["filters"]["min_hours"]} h above
+{payload["filters"]["min_alt_deg"]}° after nautical twilight. Window shows what there is.</p>
+{table(payload.get("poorly_placed", []))}
 <h2>Recent ATels of interest</h2><ul>{atel}</ul>
 <p class="meta">Sources: {html.escape(status)} ·
 <a href="candidates.json">candidates.json</a></p>

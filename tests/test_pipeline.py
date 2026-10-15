@@ -33,9 +33,10 @@ def test_full_build_targets_watch_and_state(cfg, fake_http):
     assert tcp["visibility"]["hours"] >= 1 and tcp["is_new"]
     assert tcp["first_source"] == "CBAT TOCP"
 
-    # Sgr nova candidate is low in the SW after dark: a borderline ~1.1 h window still passes.
+    # Sgr nova candidate is low in the SW after nautical twilight but still gets over 1 h.
     sgr = next(t for t in payload["targets"] if "J18251276" in t["name"])
-    assert 1.0 <= sgr["visibility"]["hours"] < 1.5 and sgr["visibility"]["start"] == "20:15"
+    assert 1.0 <= sgr["visibility"]["hours"] < 2.5 and sgr["visibility"]["start"] == "19:45"
+    assert payload["poorly_placed"] == []
     # 12.2 mag And transient: just fainter than V 12 -> watch list.
     assert any(t["name"] == "TCP J00560713+4301406" for t in payload["watch"])
     # ATel-only objects (Cyg X-3) are news, not targets.
@@ -46,6 +47,16 @@ def test_full_build_targets_watch_and_state(cfg, fake_http):
     payload2 = run.build(cfg, run.collect(cfg, NOW), NOW, LOCAL_DATE, state)
     tcp2 = next(t for t in payload2["targets"] if t["name"] == "TCP J02191736+2857158")
     assert not tcp2["is_new"] and tcp2["id"] == tcp["id"]
+
+
+def test_bright_but_short_window_is_reported_not_dropped(cfg, fake_http):
+    cfg["filters"]["min_hours"] = 3.0  # makes the low Sgr object fail the window
+    payload = run.build(cfg, run.collect(cfg, NOW), NOW, LOCAL_DATE, {"objects": {}})
+    names = [t["name"] for t in payload["poorly_placed"]]
+    assert any("J18251276" in n for n in names)
+    assert all("J18251276" not in t["name"] for t in payload["targets"] + payload["watch"])
+    low = next(t for t in payload["poorly_placed"] if "J18251276" in t["name"])
+    assert low["visibility"]["hours"] > 0 and low["id"] is None
 
 
 def test_outputs_written(cfg, fake_http, tmp_path):

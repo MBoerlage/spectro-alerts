@@ -23,7 +23,7 @@ enough for a StarEx LR and visible tonight, and publishes the result for an even
 
 ## Filters (`config.yaml`)
 
-V ≤ 10 (adjustable, the practical StarEx LR limit), at least 1 h above 20° during astronomical darkness from Tomball, Moon
+V ≤ 10 (adjustable, the practical StarEx LR limit), at least 1 h above 20° after nautical twilight (Sun below −12°) from Tomball, Moon
 separation warning below 30°, 5 arcsec cross-match radius. Objects up to 2 mag fainter go on
 a watch list.
 

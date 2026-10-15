@@ -12,7 +12,7 @@ filters:
   watch_margin: 2.0         # objects up to mag_max + this go on the watch list
   min_alt_deg: 20           # backyard horizon
   min_hours: 1.0            # minimum continuous time above min_alt in darkness tonight
-  sun_alt_max_deg: -18      # astronomical darkness
+  sun_alt_max_deg: -12      # nautical twilight: fine for V<=10 spectra
   moon_min_sep_deg: 30      # warning only, never excludes a target
   match_radius_arcsec: 5    # positions closer than this are the same object
 

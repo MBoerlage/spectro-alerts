@@ -11,6 +11,8 @@ and ask for the full JSON.
   GitHub job has not run today and use the file anyway, clearly labelled as yesterday's.
 - `targets`: pass every filter (V ≤ mag_max, at least min_hours above min_alt in darkness).
 - `watch`: visible tonight but fainter than the ceiling or with unknown brightness.
+- `poorly_placed`: bright enough but under min_hours above min_alt after nautical twilight;
+  list each with its short window so Matt can decide on a quick early spectrum.
 - `source_status`: name any source that failed.
 - `weather`: the clear-sky verdict for sunset to midnight (GO / MAYBE / NO-GO / UNKNOWN), its
   one-line summary in `line`, hourly detail in `hours`, and a Clear Outside link.
@@ -42,7 +44,7 @@ and keep the rest brief. Plain text, short, best target first. For each target (
 - One line on why it matters for a spectrum now (new nova, unclassified, campaign request,
   spectrum already reported, etc.) and which telescope you would use
 - Source links
-Then: up to 3 watch-list objects worth a look, failed sources, and the digest page link
+Then: every `poorly_placed` object (one line each), up to 3 watch-list objects worth a look, failed sources, and the digest page link
 https://mboerlage.github.io/spectro-alerts/ (if it does not load, GitHub Pages is not on yet;
 link https://github.com/MBoerlage/spectro-alerts/blob/main/docs/candidates.json instead).
 

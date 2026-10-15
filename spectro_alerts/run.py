@@ -38,6 +38,35 @@ def collect(cfg: dict, now: datetime) -> list[SourceResult]:
     return results
 
 
+def _record(obj, v: dict, f: dict, key, is_new, first_seen) -> dict:
+    best = obj.best_mag
+    first = obj.first_report
+    return {
+        "id": key,
+        "name": obj.name,
+        "names": obj.names,
+        "obj_type": obj.obj_type,
+        "ra": round(obj.ra, 6),
+        "dec": round(obj.dec, 6),
+        "ra_hms": Angle(obj.ra * u.deg).to_string(unit=u.hour, sep=":", precision=2, pad=True),
+        "dec_dms": Angle(obj.dec * u.deg).to_string(
+            unit=u.deg, sep=":", precision=1, alwayssign=True, pad=True
+        ),
+        "mag": best.mag if best else None,
+        "mag_band": best.band if best else None,
+        "mag_kind": best.mag_kind if best else None,
+        "mag_source": best.source if best else None,
+        "disc_date": first.disc_date.isoformat() if first.disc_date else None,
+        "first_source": first.source,
+        "is_new": is_new,
+        "first_seen_by_pipeline": first_seen,
+        "visibility": v,
+        "moon_warning": v["moon_sep"] is not None and v["moon_sep"] < f["moon_min_sep_deg"],
+        "reports": [r.to_dict() for r in obj.reports],
+        **obj.flags(),
+    }
+
+
 def build(
     cfg: dict,
     results: list[SourceResult],
@@ -65,39 +94,18 @@ def build(
     else:
         sky = {"verdict": "UNKNOWN", "line": "weather check disabled", "hours": []}
 
-    targets, watch = [], []
+    targets, watch, poorly_placed = [], [], []
     for obj, v in zip(objects, vis, strict=True):
+        best = obj.best_mag
         if v["hours"] < f["min_hours"]:
+            # Bright but badly placed: report it rather than drop it silently.
+            if best and best.mag is not None and best.mag <= f["mag_max"]:
+                poorly_placed.append(_record(obj, v, f, key=None, is_new=None, first_seen=None))
             continue
         key, is_new = state_mod.update(
             state, state_mod.match_known(state, obj.ra, obj.dec, f["match_radius_arcsec"]), obj, now
         )
-        best = obj.best_mag
-        first = obj.first_report
-        rec = {
-            "id": key,
-            "name": obj.name,
-            "names": obj.names,
-            "obj_type": obj.obj_type,
-            "ra": round(obj.ra, 6),
-            "dec": round(obj.dec, 6),
-            "ra_hms": Angle(obj.ra * u.deg).to_string(unit=u.hour, sep=":", precision=2, pad=True),
-            "dec_dms": Angle(obj.dec * u.deg).to_string(
-                unit=u.deg, sep=":", precision=1, alwayssign=True, pad=True
-            ),
-            "mag": best.mag if best else None,
-            "mag_band": best.band if best else None,
-            "mag_kind": best.mag_kind if best else None,
-            "mag_source": best.source if best else None,
-            "disc_date": first.disc_date.isoformat() if first.disc_date else None,
-            "first_source": first.source,
-            "is_new": is_new,
-            "first_seen_by_pipeline": state["objects"][key]["first_seen"],
-            "visibility": v,
-            "moon_warning": v["moon_sep"] is not None and v["moon_sep"] < f["moon_min_sep_deg"],
-            "reports": [r.to_dict() for r in obj.reports],
-            **obj.flags(),
-        }
+        rec = _record(obj, v, f, key, is_new, state["objects"][key]["first_seen"])
         if rec["mag"] is not None and rec["mag"] <= f["mag_max"]:
             targets.append(rec)
         elif rec["mag"] is None or rec["mag"] <= f["mag_max"] + f["watch_margin"]:
@@ -108,6 +116,7 @@ def build(
 
     targets.sort(key=order)
     watch.sort(key=order)
+    poorly_placed.sort(key=lambda t: t["mag"])
     return {
         "schema_version": 1,
         "pipeline_version": __version__,
@@ -133,6 +142,7 @@ def build(
         ],
         "targets": targets,
         "watch": watch,
+        "poorly_placed": poorly_placed,
         "atel_recent": atel_items,
     }
 
