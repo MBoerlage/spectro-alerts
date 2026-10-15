@@ -27,6 +27,13 @@ class Night:
     dark: np.ndarray
     frame: AltAz
     location: EarthLocation
+    sun_alt: np.ndarray
+
+    @property
+    def sunset(self) -> datetime | None:
+        """First sample with the Sun's upper limb below the horizon (-0.833 deg)."""
+        idx = np.flatnonzero(self.sun_alt < -0.833)
+        return self.times[idx[0]].to_datetime(timezone=self.tz) if idx.size else None
 
     @property
     def dark_start(self) -> datetime | None:
@@ -54,7 +61,9 @@ def tonight(site: dict, sun_alt_max: float, local_date: datetime | None = None) 
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         sun_alt = get_body("sun", times, loc).transform_to(frame).alt.deg
-    return Night(tz=tz, times=times, dark=sun_alt < sun_alt_max, frame=frame, location=loc)
+    return Night(
+        tz=tz, times=times, dark=sun_alt < sun_alt_max, frame=frame, location=loc, sun_alt=sun_alt
+    )
 
 
 def _longest_run(mask: np.ndarray) -> tuple[int, int]:

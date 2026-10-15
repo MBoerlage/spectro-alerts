@@ -33,6 +33,16 @@ sources:
     url: https://www.astronomerstelegram.org/?rss
     lookback_days: 7
 
+weather:
+  enabled: true
+  window: sunset to midnight local     # informational; the code uses this window
+  max_cloud_pct: 20         # effective cloud (low + mid full weight, high at high_cloud_weight)
+  high_cloud_weight: 0.5    # thin high cloud dims a spectrum less than low cloud
+  max_rain_pct: 10          # precipitation probability
+  max_gust_mph: 15
+  min_clear_hours: 1        # continuous clear hours needed for GO
+  seven_timer: true         # second opinion plus seeing/transparency
+
 output:
   docs_dir: docs            # published by GitHub Pages
   state_file: state/objects.json

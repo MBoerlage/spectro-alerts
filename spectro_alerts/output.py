@@ -39,6 +39,40 @@ def _row(t: dict) -> str:
     )
 
 
+VERDICT_COLORS = {"GO": "#1e8e3e", "MAYBE": "#b06d00", "NO-GO": "#c5221f", "UNKNOWN": "#666"}
+
+
+def _weather_block(w: dict) -> str:
+    color = VERDICT_COLORS.get(w.get("verdict", "UNKNOWN"), "#666")
+    hours = "".join(
+        f'<td title="{html.escape(h["why_not"] or "clear")}" '
+        f'style="background:{"#1e8e3e33" if h["clear"] else "#c5221f33"}">'
+        f"{h['hour'][:2]}<br><small>{h['cloud_eff']:.0f}%<br>{h['rain_pct']:.0f}%<br>"
+        f"{h['gust_mph']:.0f}</small></td>"
+        for h in w.get("hours", [])
+    )
+    strip = (
+        f'<table class="wx"><tr><th><small>hour<br>cloud<br>rain<br>gust mph</small></th>'
+        f"{hours}</tr></table>"
+        if hours
+        else ""
+    )
+    errs = "; ".join(f"{k} failed" for k in w.get("errors", {}))
+    link = w.get("clear_outside_url")
+    return (
+        f'<p class="verdict" style="border-color:{color}"><b style="color:{color}">'
+        f"{html.escape(w.get('line', ''))}</b>"
+        + (f"<br><small>{html.escape(errs)}</small>" if errs else "")
+        + "</p>"
+        + strip
+        + (
+            f'<p class="meta">Visual check: <a href="{html.escape(link)}">Clear Outside</a></p>'
+            if link
+            else ""
+        )
+    )
+
+
 def write_page(path: Path, payload: dict) -> None:
     def table(rows: list[dict]) -> str:
         if not rows:
@@ -72,11 +106,14 @@ color:#1d1d1f;background:#fbfbfa}}
 table{{border-collapse:collapse;width:100%;margin:8px 0 24px}}
 th,td{{text-align:left;padding:8px 6px;border-bottom:1px solid #8884;vertical-align:top}}
 small{{opacity:.7}} .meta{{opacity:.75;font-size:13px}}
+.verdict{{border-left:4px solid;padding:8px 12px;margin:16px 0 8px;font-size:16px}}
+table.wx{{width:auto}} table.wx td,table.wx th{{text-align:center;padding:4px 8px;border:0}}
 </style></head><body>
 <h1>Spectro Alerts · {html.escape(payload["site"]["name"])}</h1>
 <p class="meta">Generated {payload["generated_utc"]} UTC · darkness {night["dark_start"]} to
 {night["dark_end"]} · V ≤ {payload["filters"]["mag_max"]}, at least
 {payload["filters"]["min_hours"]} h above {payload["filters"]["min_alt_deg"]}°</p>
+{_weather_block(payload.get("weather", {}))}
 <h2>Targets tonight ({len(payload["targets"])})</h2>{table(payload["targets"])}
 <h2>Watch list ({len(payload["watch"])})</h2>
 <p class="meta">Visible tonight but fainter than the ceiling, or brightness unknown.</p>

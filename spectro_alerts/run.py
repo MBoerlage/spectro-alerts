@@ -15,7 +15,7 @@ import astropy.units as u
 import yaml
 from astropy.coordinates import Angle
 
-from . import __version__, output, visibility
+from . import __version__, output, visibility, weather
 from . import state as state_mod
 from .match import attach_atel_by_name, cross_match
 from .model import SourceResult
@@ -39,7 +39,12 @@ def collect(cfg: dict, now: datetime) -> list[SourceResult]:
 
 
 def build(
-    cfg: dict, results: list[SourceResult], now: datetime, local_date: datetime, state: dict
+    cfg: dict,
+    results: list[SourceResult],
+    now: datetime,
+    local_date: datetime,
+    state: dict,
+    weather_raw: dict | None = None,
 ) -> dict:
     f = cfg["filters"]
     cands = [c for r in results for c in r.candidates]
@@ -53,6 +58,12 @@ def build(
     vis = visibility.evaluate(
         night, [o.ra for o in objects], [o.dec for o in objects], f["min_alt_deg"]
     )
+
+    wcfg = cfg.get("weather", {})
+    if weather_raw is not None and wcfg.get("enabled", True):
+        sky = weather.assess(weather_raw, night.sunset, cfg["site"], wcfg)
+    else:
+        sky = {"verdict": "UNKNOWN", "line": "weather check disabled", "hours": []}
 
     targets, watch = [], []
     for obj, v in zip(objects, vis, strict=True):
@@ -103,8 +114,10 @@ def build(
         "generated_utc": now.strftime("%Y-%m-%d %H:%M"),
         "site": cfg["site"],
         "filters": f,
+        "weather": sky,
         "night": {
             "date": local_date.strftime("%Y-%m-%d"),
+            "sunset": night.sunset.strftime("%H:%M") if night.sunset else None,
             "dark_start": night.dark_start.strftime("%H:%M") if night.dark_start else None,
             "dark_end": night.dark_end.strftime("%H:%M") if night.dark_end else None,
         },
@@ -145,7 +158,9 @@ def main(argv: list[str] | None = None) -> int:
     state = state_mod.load(state_path)
 
     results = collect(cfg, now)
-    payload = build(cfg, results, now, local_date, state)
+    wcfg = cfg.get("weather", {})
+    weather_raw = weather.fetch(cfg["site"], wcfg) if wcfg.get("enabled", True) else None
+    payload = build(cfg, results, now, local_date, state, weather_raw)
 
     docs = Path(out_cfg["docs_dir"])
     output.write_json(docs / "candidates.json", payload)
@@ -164,6 +179,7 @@ def main(argv: list[str] | None = None) -> int:
             f" ({s['error']})" if s["error"] else "",
         )
     log.info("Targets: %d, watch: %d", len(payload["targets"]), len(payload["watch"]))
+    log.info("Sky: %s", payload["weather"]["line"])
     # Fail the workflow only if every source failed.
     return 0 if any(s["ok"] for s in payload["source_status"]) else 1
 

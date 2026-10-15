@@ -11,6 +11,8 @@ WebFetch https://mboerlage.github.io/spectro-alerts/candidates.json and ask for 
 - `targets`: pass every filter (V ≤ mag_max, at least min_hours above min_alt in darkness).
 - `watch`: visible tonight but fainter than the ceiling or with unknown brightness.
 - `source_status`: name any source that failed.
+- `weather`: the clear-sky verdict for sunset to midnight (GO / MAYBE / NO-GO / UNKNOWN), its
+  one-line summary in `line`, hourly detail in `hours`, and a Clear Outside link.
 
 ## 2. Check campaign requests
 - ARAS Eruptive Stars forum: https://www.spectro-aras.com/forum/ (recent topics only).
@@ -21,7 +23,9 @@ to the top. A campaign object not in the JSON: list it separately as "Campaign, 
 for visibility". Never invent coordinates or magnitudes.
 
 ## 3. Write the digest
-Plain text, short, best target first. For each target (at most 6):
+Start with the sky verdict line exactly as in `weather.line`, then the Clear Outside link. If the
+verdict is NO-GO, say so plainly in the email subject-style first line ("NO-GO tonight: ...")
+and keep the rest brief. Plain text, short, best target first. For each target (at most 6):
 - Name (and aliases), type, magnitude with band and whether it is a discovery value
 - Tonight's window (local time), max altitude and when, Moon note if `moon_warning`
 - One line on why it matters for a spectrum now (new nova, unclassified, campaign request,

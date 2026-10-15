@@ -27,6 +27,14 @@ V ≤ 10 (adjustable, the practical StarEx LR limit), at least 1 h above 20° du
 separation warning below 30°, 5 arcsec cross-match radius. Objects up to 2 mag fainter go on
 a watch list.
 
+## Sky check
+
+Each run rates sunset to midnight with Open-Meteo hourly forecasts: an hour is clear when
+effective cloud (low and mid at full weight, high at half) is at most 20%, rain chance at most
+10% and gusts at most 15 mph. At least one clear hour in a row gives GO. 7Timer! ASTRO is a
+second opinion (MAYBE when they disagree) and adds seeing and transparency. The digest links
+Clear Outside for a visual check. Thresholds are in the `weather` section of `config.yaml`.
+
 ## Local use
 
 ```bash

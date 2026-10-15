@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from datetime import datetime, timezone
 from pathlib import Path
 from types import SimpleNamespace
@@ -40,6 +41,10 @@ def fake_http(monkeypatch):
             body = (FIX / "followup.html").read_text()
         elif "wis-tns" in url:
             body = (FIX / "tns.csv").read_text()
+        elif "open-meteo" in url:
+            return SimpleNamespace(json=lambda: json.loads((FIX / "open_meteo.json").read_text()))
+        elif "7timer" in url:
+            return SimpleNamespace(json=lambda: json.loads((FIX / "seven_timer.json").read_text()))
         elif "astronomerstelegram" in url:
             body = (FIX / "atel.xml").read_text()
         else:

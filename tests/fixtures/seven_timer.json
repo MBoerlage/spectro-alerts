@@ -1,0 +1,118 @@
+{
+"product": "astro",
+"init": "2026101512",
+"dataseries": [
+{
+"timepoint": 3,
+"cloudcover": 1,
+"seeing": 5,
+"transparency": 3,
+"lifted_index": -1,
+"rh2m": 8,
+"wind10m": {
+"direction": "SE",
+"speed": 2
+},
+"temp2m": 24,
+"prec_type": "none"
+},
+{
+"timepoint": 6,
+"cloudcover": 1,
+"seeing": 5,
+"transparency": 3,
+"lifted_index": -1,
+"rh2m": 8,
+"wind10m": {
+"direction": "SE",
+"speed": 2
+},
+"temp2m": 24,
+"prec_type": "none"
+},
+{
+"timepoint": 9,
+"cloudcover": 1,
+"seeing": 5,
+"transparency": 3,
+"lifted_index": -1,
+"rh2m": 8,
+"wind10m": {
+"direction": "SE",
+"speed": 2
+},
+"temp2m": 24,
+"prec_type": "none"
+},
+{
+"timepoint": 12,
+"cloudcover": 2,
+"seeing": 7,
+"transparency": 4,
+"lifted_index": -1,
+"rh2m": 8,
+"wind10m": {
+"direction": "SE",
+"speed": 2
+},
+"temp2m": 24,
+"prec_type": "none"
+},
+{
+"timepoint": 15,
+"cloudcover": 1,
+"seeing": 7,
+"transparency": 5,
+"lifted_index": -1,
+"rh2m": 8,
+"wind10m": {
+"direction": "SE",
+"speed": 2
+},
+"temp2m": 24,
+"prec_type": "none"
+},
+{
+"timepoint": 18,
+"cloudcover": 1,
+"seeing": 8,
+"transparency": 6,
+"lifted_index": -1,
+"rh2m": 8,
+"wind10m": {
+"direction": "SE",
+"speed": 2
+},
+"temp2m": 24,
+"prec_type": "none"
+},
+{
+"timepoint": 21,
+"cloudcover": 3,
+"seeing": 5,
+"transparency": 4,
+"lifted_index": -1,
+"rh2m": 8,
+"wind10m": {
+"direction": "SE",
+"speed": 2
+},
+"temp2m": 24,
+"prec_type": "none"
+},
+{
+"timepoint": 24,
+"cloudcover": 6,
+"seeing": 4,
+"transparency": 4,
+"lifted_index": -1,
+"rh2m": 8,
+"wind10m": {
+"direction": "SE",
+"speed": 2
+},
+"temp2m": 24,
+"prec_type": "rain"
+}
+]
+}
