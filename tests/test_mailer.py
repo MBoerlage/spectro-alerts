@@ -11,16 +11,22 @@ def _payload(cfg):
 
 def test_subject_and_bodies_cover_every_section(cfg, fake_http):
     p = _payload(cfg)
-    p["weather"] = {"verdict": "GO", "line": "GO: clear 21:00-00:00", "clear_outside_url": "x"}
+    p["weather"] = {
+        "verdict": "GO",
+        "line": "GO: clear 21:00-00:00",
+        "clear_from": "21:00",
+        "clear_to": "00:00",
+        "clear_outside_url": "x",
+    }
     assert mailer.subject(p) == "SPECTRO ALERT: YES, good skies? YES"
     p["weather"]["verdict"] = "MAYBE"
     assert mailer.subject(p) == "SPECTRO ALERT: YES, good skies? MAYBE"
     p["weather"]["verdict"] = "GO"
     text = mailer.text_body(p)
     assert "TCP J02191736+2857158" in text and "spectrum already reported" in text
-    assert "Bright but poorly placed" in text and "SN 2026afaa" in text
+    assert "TCP J00560713+4301406" in text  # watch list
     html = mailer.html_body(p)
-    assert "GO: clear 21:00-00:00" in html and "<b>TCP J02191736+2857158</b>" in html
+    assert "Clear skies · clear 21:00–00:00" in html and "<b>TCP J02191736+2857158</b>" in html
 
 
 def test_send_posts_to_resend_and_reports_errors(cfg, fake_http, monkeypatch):

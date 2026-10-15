@@ -124,51 +124,185 @@ def text_body(p: dict) -> str:
 
 
 VERDICT_COLORS = {"GO": "#1e8e3e", "MAYBE": "#b06d00", "NO-GO": "#c5221f", "UNKNOWN": "#666666"}
+VERDICT_WORDS = {
+    "GO": "Clear skies",
+    "MAYBE": "Maybe clear",
+    "NO-GO": "Not clear",
+    "UNKNOWN": "Unknown",
+}
+
+# Email clients ignore <style> blocks unevenly, so every style is inline.
+FONT = "font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif"
+TH = (
+    "text-align:left;padding:6px 8px;font-size:12px;color:#5f6368;font-weight:600;"
+    "border-bottom:2px solid #dadce0;white-space:nowrap"
+)
+TD = "padding:8px;border-bottom:1px solid #eceff1;vertical-align:top;font-size:14px"
+GOOD, BAD = "#e6f4ea", "#fce8e6"
+
+
+def _badge(text: str, color: str) -> str:
+    return (
+        f'<span style="display:inline-block;padding:1px 6px;border-radius:9px;font-size:11px;'
+        f'font-weight:600;color:#fff;background:{color};margin-left:4px">{html.escape(text)}</span>'
+    )
+
+
+def _weather_html(w: dict) -> str:
+    e = html.escape
+    verdict = w.get("verdict", "UNKNOWN")
+    color = VERDICT_COLORS.get(verdict, "#666666")
+    st = w.get("seven_timer") or {}
+    seeing = (
+        f'Seeing {e(st["seeing_arcsec"])}" · transparency {st["transparency_best"]}/8 (1 = best)'
+        if st.get("seeing_arcsec")
+        else ""
+    )
+    clear = (
+        f"clear {w['clear_from']}–{w['clear_to']}"
+        if w.get("clear_from")
+        else "no clear hour before midnight"
+    )
+    out = [
+        f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
+        f'style="background:{color};border-radius:8px;margin:0 0 12px"><tr>'
+        f'<td style="padding:12px 16px;color:#fff">'
+        f'<div style="font-size:20px;font-weight:700">{e(VERDICT_WORDS.get(verdict, verdict))}'
+        f" · {e(clear)}</div>"
+        + (
+            f'<div style="font-size:13px;opacity:.9;margin-top:2px">{seeing}</div>'
+            if seeing
+            else ""
+        )
+        + "</td></tr></table>"
+    ]
+    hours = w.get("hours", [])
+    if hours:
+
+        def row(label: str, key: str, fmt: str, unit: str = "") -> str:
+            cells = "".join(
+                f'<td style="padding:5px 6px;text-align:center;font-size:13px;'
+                f'background:{GOOD if h["clear"] else BAD}">{fmt.format(h[key])}{unit}</td>'
+                for h in hours
+            )
+            return (
+                f'<tr><td style="padding:5px 8px;font-size:12px;color:#5f6368;'
+                f'white-space:nowrap">{label}</td>{cells}</tr>'
+            )
+
+        head = "".join(
+            f'<td style="padding:5px 6px;text-align:center;font-size:12px;font-weight:600">'
+            f"{h['hour'][:2]}</td>"
+            for h in hours
+        )
+        out.append(
+            '<table cellpadding="0" cellspacing="2" style="border-collapse:separate;'
+            'margin:0 0 4px">'
+            f'<tr><td style="padding:5px 8px;font-size:12px;color:#5f6368">Hour</td>{head}</tr>'
+            + row("Cloud", "cloud_eff", "{:.0f}", "%")
+            + row("Rain", "rain_pct", "{:.0f}", "%")
+            + row("Gusts", "gust_mph", "{:.0f}")
+            + "</table>"
+        )
+        t = w.get("thresholds", {})
+        out.append(
+            f'<div style="font-size:12px;color:#5f6368;margin:0 0 4px">Green = clear: cloud '
+            f"≤{t.get('max_cloud_pct', 20)}%, rain ≤{t.get('max_rain_pct', 10)}%, gusts "
+            f"≤{t.get('max_gust_mph', 15)} mph. "
+            f'<a href="{e(w.get("clear_outside_url", ""))}">Clear Outside</a></div>'
+        )
+    return "".join(out)
+
+
+def _table(rows: list[dict], muted: bool = False) -> str:
+    e = html.escape
+    head = "".join(
+        f'<th style="{TH}">{h}</th>' for h in ("Object", "Mag", "Tonight", "Max alt", "Links")
+    )
+    body = []
+    for t in rows:
+        v = t["visibility"]
+        badges = ""
+        if t.get("is_new"):
+            badges += _badge("NEW", "#1a73e8")
+        if t.get("spectroscopically_confirmed"):
+            badges += _badge("spectrum", "#7b1fa2")
+        if t.get("has_atel"):
+            badges += _badge("ATel", "#5f6368")
+        if t.get("moon_warning"):
+            badges += _badge(f"Moon {v['moon_sep']:.0f}°", "#b06d00")
+        alias = ", ".join(x for x in t["names"] if x != t["name"])
+        sub = e(t["obj_type"]) + (f" · {e(alias)}" if alias else "")
+        mag = "?" if t["mag"] is None else f"{t['mag']:.1f}"
+        band = e(t.get("mag_band") or "")
+        links = "<br>".join(f'<a href="{e(u)}">{e(s.split()[0])}</a>' for s, u in _links(t))
+        body.append(
+            "<tr>"
+            f'<td style="{TD}"><b>{e(t["name"])}</b>{badges}<br>'
+            f'<span style="font-size:12px;color:#5f6368">{sub}<br>'
+            f"{t['ra_hms'][:8]} {t['dec_dms'][:9]}</span></td>"
+            f'<td style="{TD};white-space:nowrap"><b>{mag}</b><br>'
+            f'<span style="font-size:12px;color:#5f6368">{band}</span></td>'
+            f'<td style="{TD};white-space:nowrap">{v["start"] or "-"}–{v["end"] or "-"}<br>'
+            f'<span style="font-size:12px;color:#5f6368">{v["hours"]:.1f} h</span></td>'
+            f'<td style="{TD};white-space:nowrap">{v["max_alt"] or 0:.0f}°<br>'
+            f'<span style="font-size:12px;color:#5f6368">at {v["max_alt_time"] or "-"}</span></td>'
+            f'<td style="{TD};font-size:12px">{links}</td>'
+            "</tr>"
+        )
+    style = "border-collapse:collapse;width:100%;margin:0 0 8px" + (";opacity:.8" if muted else "")
+    rows_html = "".join(body)
+    return (
+        f'<table cellpadding="0" cellspacing="0" style="{style}"><tr>{head}</tr>{rows_html}</table>'
+    )
 
 
 def html_body(p: dict) -> str:
     e = html.escape
     w = p.get("weather", {})
     n = p["night"]
-    color = VERDICT_COLORS.get(w.get("verdict", "UNKNOWN"), "#666666")
+    f = p["filters"]
+    low = f["mag_max"] + f["watch_margin"]
+    h2 = 'style="font-size:16px;margin:22px 0 6px"'
+    note = 'style="font-size:12px;color:#5f6368;margin:0 0 6px"'
     parts = [
-        '<div style="font:15px/1.45 -apple-system,Segoe UI,Roboto,sans-serif;max-width:640px">',
-        f'<p style="border-left:4px solid {color};padding:6px 10px;margin:0 0 8px">'
-        f'<b style="color:{color}">{e(w.get("line", "Weather: unknown"))}</b></p>',
-        f'<p style="margin:0 0 16px;color:#666;font-size:13px">Sunset {n["sunset"]} · observing '
-        f"{n['dark_start']}–{n['dark_end']} · "
-        f'<a href="{e(w.get("clear_outside_url", ""))}">Clear Outside</a></p>',
+        f'<div style="{FONT};color:#202124;max-width:680px;margin:0 auto">',
+        _weather_html(w),
+        f"<div {note}>Sunset {n['sunset']} · observing {n['dark_start']}–{n['dark_end']} "
+        f"(Sun below {abs(f['sun_alt_max_deg'])}°) · Tomball</div>",
+        f"<h2 {h2}>Targets tonight ({len(p['targets'])})</h2>",
+        f"<div {note}>V ≤ {f['mag_max']}, at least {f['min_hours']} h above "
+        f"{f['min_alt_deg']}°</div>",
+        _table(p["targets"]) if p["targets"] else "<p><i>None tonight.</i></p>",
     ]
-    for title, rows, empty in _sections(p):
-        if not rows and not empty:
-            continue
-        parts.append(f'<h3 style="margin:18px 0 6px">{e(title)}</h3>')
-        if not rows:
-            parts.append(f"<p><i>{e(empty)}</i></p>")
-        for t in rows:
-            names = ", ".join(x for x in t["names"] if x != t["name"])
-            links = " · ".join(f'<a href="{e(u)}">{e(s)}</a>' for s, u in _links(t))
-            notes = "; ".join(_notes(t))
-            parts.append(
-                '<p style="margin:0 0 12px">'
-                f"<b>{e(t['name'])}</b>"
-                + (f' <span style="color:#666">({e(names)})</span>' if names else "")
-                + f"<br>{e(t['obj_type'])}, <b>{e(_mag(t))}</b>, {t['ra_hms']} {t['dec_dms']}"
-                + f"<br>Tonight: {e(_window(t))}"
-                + (f"<br><i>{e(notes)}</i>" if notes else "")
-                + (f"<br>{links}" if links else "")
-                + "</p>"
-            )
+    if p.get("poorly_placed"):
+        parts += [
+            f"<h2 {h2}>Bright but poorly placed ({len(p['poorly_placed'])})</h2>",
+            f"<div {note}>V ≤ {low}, but under {f['min_hours']} h above {f['min_alt_deg']}°</div>",
+            _table(p["poorly_placed"], muted=True),
+        ]
+    if p["watch"]:
+        parts += [
+            f"<h2 {h2}>Watch list ({len(p['watch'])})</h2>",
+            f"<div {note}>Visible tonight, V {f['mag_max']}–{low} or brightness unknown</div>",
+            _table(p["watch"][:5], muted=True),
+        ]
     atels = [i for i in p.get("atel_recent", []) if i.get("of_interest")]
     if atels:
-        parts.append('<h3 style="margin:18px 0 6px">Recent ATels of interest</h3><ul>')
-        parts += [f'<li><a href="{e(i["url"])}">{e(i["title"])}</a></li>' for i in atels[:5]]
-        parts.append("</ul>")
-    failed = [s for s in p["source_status"] if not s["ok"]]
-    foot = f'<a href="{PAGE_URL}">Full digest page</a>'
-    if failed:
-        foot = "Failed today: " + ", ".join(e(s["source"]) for s in failed) + " · " + foot
-    parts.append(f'<p style="color:#666;font-size:13px;margin-top:20px">{foot}</p></div>')
+        parts.append(f"<h2 {h2}>Recent ATels</h2>")
+        parts += [
+            f'<div style="font-size:13px;margin:0 0 4px"><a href="{e(i["url"])}">'
+            f"{e(i['title'])}</a></div>"
+            for i in atels[:5]
+        ]
+    status = " · ".join(
+        f"{e(s['source'])} {'✓' if s['ok'] else '✗ failed'}" for s in p["source_status"]
+    )
+    parts.append(
+        f'<div style="font-size:12px;color:#5f6368;border-top:1px solid #eceff1;'
+        f'margin-top:22px;padding-top:8px">{status} · '
+        f'<a href="{PAGE_URL}">full digest page</a></div></div>'
+    )
     return "".join(parts)
 
 

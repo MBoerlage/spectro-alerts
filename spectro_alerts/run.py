@@ -100,7 +100,10 @@ def build(
     for obj, v in zip(objects, vis, strict=True):
         best = obj.best_mag
         mag = best.mag if best else None
-        if v["hours"] < f["min_hours"] and not (mag is not None and mag <= low_limit):
+        # Short-window objects are listed only if there is some window at all tonight.
+        if v["hours"] < f["min_hours"] and not (
+            mag is not None and mag <= low_limit and v["hours"] > 0
+        ):
             # Kept in the JSON so "why didn't I see X?" can be answered from the file.
             skipped.append(
                 {
