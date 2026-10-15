@@ -73,6 +73,10 @@ def _weather_block(w: dict) -> str:
     )
 
 
+def _low_limit(payload: dict) -> float:
+    return payload["filters"]["mag_max"] + payload["filters"]["watch_margin"]
+
+
 def write_page(path: Path, payload: dict) -> None:
     def table(rows: list[dict]) -> str:
         if not rows:
@@ -119,8 +123,9 @@ table.wx{{width:auto}} table.wx td,table.wx th{{text-align:center;padding:4px 8p
 <p class="meta">Visible tonight but fainter than the ceiling, or brightness unknown.</p>
 {table(payload["watch"])}
 <h2>Bright but poorly placed ({len(payload.get("poorly_placed", []))})</h2>
-<p class="meta">Bright enough, but less than {payload["filters"]["min_hours"]} h above
-{payload["filters"]["min_alt_deg"]}° after nautical twilight. Window shows what there is.</p>
+<p class="meta">Down to V {_low_limit(payload)}, but less than
+{payload["filters"]["min_hours"]} h above {payload["filters"]["min_alt_deg"]}°
+after nautical twilight. Window shows what there is.</p>
 {table(payload.get("poorly_placed", []))}
 <h2>Recent ATels of interest</h2><ul>{atel}</ul>
 <p class="meta">Sources: {html.escape(status)} ·

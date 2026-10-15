@@ -11,7 +11,7 @@ and ask for the full JSON.
   GitHub job has not run today and use the file anyway, clearly labelled as yesterday's.
 - `targets`: pass every filter (V ≤ mag_max, at least min_hours above min_alt in darkness).
 - `watch`: visible tonight but fainter than the ceiling or with unknown brightness.
-- `poorly_placed`: bright enough but under min_hours above min_alt after nautical twilight;
+- `poorly_placed`: down to V mag_max + watch_margin but under min_hours above min_alt after nautical twilight;
   list each with its short window so Matt can decide on a quick early spectrum.
 - `source_status`: name any source that failed.
 - `weather`: the clear-sky verdict for sunset to midnight (GO / MAYBE / NO-GO / UNKNOWN), its

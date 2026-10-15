@@ -95,10 +95,12 @@ def build(
         sky = {"verdict": "UNKNOWN", "line": "weather check disabled", "hours": []}
 
     targets, watch, poorly_placed, skipped = [], [], [], []
+    # Short-window objects are reported down to the watch-list limit (V 12 by default).
+    low_limit = f["mag_max"] + f["watch_margin"]
     for obj, v in zip(objects, vis, strict=True):
         best = obj.best_mag
         mag = best.mag if best else None
-        if v["hours"] < f["min_hours"] and not (mag is not None and mag <= f["mag_max"]):
+        if v["hours"] < f["min_hours"] and not (mag is not None and mag <= low_limit):
             # Kept in the JSON so "why didn't I see X?" can be answered from the file.
             skipped.append(
                 {
@@ -109,13 +111,13 @@ def build(
                     "max_alt": v["max_alt"],
                     "reason": f"under {f['min_hours']} h above {f['min_alt_deg']} deg"
                     + ("" if mag is not None else "; magnitude unknown")
-                    + (f"; fainter than V {f['mag_max']}" if mag and mag > f["mag_max"] else ""),
+                    + (f"; fainter than V {low_limit}" if mag and mag > low_limit else ""),
                 }
             )
             continue
         if v["hours"] < f["min_hours"]:
             # Bright but badly placed: report it rather than drop it silently.
-            if best and best.mag is not None and best.mag <= f["mag_max"]:
+            if mag is not None and mag <= low_limit:
                 poorly_placed.append(_record(obj, v, f, key=None, is_new=None, first_seen=None))
             continue
         key, is_new = state_mod.update(
