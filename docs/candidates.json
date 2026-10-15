@@ -1,7 +1,7 @@
 {
  "schema_version": 1,
  "pipeline_version": "0.1.0",
- "generated_utc": "2026-10-15 17:10",
+ "generated_utc": "2026-10-15 17:12",
  "site": {
   "name": "Tomball, TX",
   "lat": 30.0972,
@@ -45,7 +45,7 @@
     "cloud_low": 0.0,
     "cloud_mid": 0.0,
     "cloud_high": 0.0,
-    "rain_pct": 1.0,
+    "rain_pct": 0.0,
     "wind_mph": 11.4,
     "gust_mph": 20.6,
     "temp_f": 83.0,
@@ -171,10 +171,10 @@
   },
   {
    "source": "TNS",
-   "ok": true,
-   "error": "",
-   "fetched": 5,
-   "candidates": 5
+   "ok": false,
+   "error": "403 Client Error: Forbidden for url: https://www.wis-tns.org/search?date_start%5Bdate%5D=2026-09-15&date_end%5Bdate%5D=2026-10-16&discovery_mag_max=15.0&num_page=500&format=csv",
+   "fetched": 0,
+   "candidates": 0
   },
   {
    "source": "ATel",
