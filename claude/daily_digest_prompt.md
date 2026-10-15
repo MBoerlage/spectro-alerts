@@ -5,7 +5,8 @@ You are writing Matt's evening target digest for backyard spectroscopy (StarEx L
 below and in the files it points to.
 
 ## 1. Read today's candidates
-WebFetch https://mboerlage.github.io/spectro-alerts/candidates.json and ask for the full JSON.
+WebFetch https://raw.githubusercontent.com/MBoerlage/spectro-alerts/main/docs/candidates.json
+and ask for the full JSON.
 - Check `generated_utc`. If it is not from today (UTC), say at the top of the digest that the
   GitHub job has not run today and use the file anyway, clearly labelled as yesterday's.
 - `targets`: pass every filter (V ≤ mag_max, at least min_hours above min_alt in darkness).
@@ -32,7 +33,8 @@ and keep the rest brief. Plain text, short, best target first. For each target (
   spectrum already reported, etc.) and which telescope you would use
 - Source links
 Then: up to 3 watch-list objects worth a look, failed sources, and the digest page link
-https://mboerlage.github.io/spectro-alerts/
+https://mboerlage.github.io/spectro-alerts/ (if it does not load, GitHub Pages is not on yet;
+link https://github.com/MBoerlage/spectro-alerts/blob/main/docs/candidates.json instead).
 
 If there are no targets, say so in one line and give the watch list.
 
