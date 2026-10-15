@@ -60,7 +60,7 @@ def test_cbat_failure_is_reported_not_raised(cfg, monkeypatch):
 def test_tns_csv_filters_by_discovery_mag_and_bad_coords(cfg, fake_http):
     res = tns.fetch(cfg["sources"]["tns"], NOW)
     names = {c.name for c in res.candidates}
-    assert res.ok and res.fetched == 5
+    assert res.ok and res.fetched == 6  # 2025 row is fetched but dropped by date
     assert names == {"AT 2026afkk", "SN 2026afaa"}  # faint rows and bad RA dropped
     sn = next(c for c in res.candidates if c.name == "SN 2026afaa")
     assert sn.obj_type == "SN Ia" and sn.url.endswith("/object/2026afaa")

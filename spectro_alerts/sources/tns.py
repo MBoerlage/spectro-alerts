@@ -9,7 +9,7 @@ from __future__ import annotations
 import csv
 import io
 import logging
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 from .. import http
 from ..coords import parse_sexagesimal
@@ -41,12 +41,17 @@ def _to_dt(s: str) -> datetime | None:
         return None
 
 
-def rows_to_candidates(rows: list[dict], disc_mag_max: float) -> list[Candidate]:
+def rows_to_candidates(
+    rows: list[dict], disc_mag_max: float, since: datetime | None = None
+) -> list[Candidate]:
     out = []
     for row in rows:
         mag = _to_float(row.get("Discovery Mag/Flux", ""))
         if mag is None or mag > disc_mag_max:
             continue
+        disc = _to_dt(row.get("Discovery Date (UT)", ""))
+        if since and disc and disc < since:
+            continue  # TNS sometimes returns older objects; keep only the lookback window
         try:
             ra, dec = parse_sexagesimal(row["RA"], row["DEC"])
         except (KeyError, ValueError) as exc:
@@ -64,7 +69,7 @@ def rows_to_candidates(rows: list[dict], disc_mag_max: float) -> list[Candidate]
                 mag=mag,
                 band=row.get("Discovery Filter", ""),
                 mag_kind="discovery",
-                disc_date=_to_dt(row.get("Discovery Date (UT)", "")),
+                disc_date=disc,
                 obj_type=row.get("Obj. Type", "").strip() or "unclassified",
                 extra={
                     "host": row.get("Host Name", ""),
@@ -78,9 +83,12 @@ def rows_to_candidates(rows: list[dict], disc_mag_max: float) -> list[Candidate]
 
 
 def fetch(cfg: dict, now: datetime) -> SourceResult:
+    since = now - timedelta(days=cfg.get("lookback_days", 30))
+    # Explicit date range: the discovered_period_* parameters were ignored when combined
+    # with the magnitude cut (tested 2026-10-15).
     params = {
-        "discovered_period_value": cfg.get("lookback_days", 30),
-        "discovered_period_units": "days",
+        "date_start[date]": since.strftime("%Y-%m-%d"),
+        "date_end[date]": (now + timedelta(days=1)).strftime("%Y-%m-%d"),
         "discovery_mag_max": cfg.get("disc_mag_max", 15.0),
         "num_page": 500,
         "format": "csv",
@@ -90,5 +98,5 @@ def fetch(cfg: dict, now: datetime) -> SourceResult:
     except Exception as exc:  # noqa: BLE001
         log.error("TNS fetch failed: %s", exc)
         return SourceResult(source=SOURCE, ok=False, error=str(exc))
-    cands = rows_to_candidates(rows, cfg.get("disc_mag_max", 15.0))
+    cands = rows_to_candidates(rows, cfg.get("disc_mag_max", 15.0), since)
     return SourceResult(source=SOURCE, candidates=cands, fetched=len(rows))
