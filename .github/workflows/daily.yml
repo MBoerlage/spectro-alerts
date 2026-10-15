@@ -7,8 +7,12 @@ on:
     - cron: "30 20 * * *"
   workflow_dispatch:
     inputs:
+      send_email:
+        description: "Email the digest (only if there are targets)"
+        type: boolean
+        default: true
       always_send:
-        description: "Send a test email even if there are no targets"
+        description: "Send even with no targets (test)"
         type: boolean
         default: false
 
@@ -53,7 +57,8 @@ jobs:
           fi
 
       - name: Email the digest
-        # The mailer sends only when there is at least one target, unless the test box is ticked.
+        # Mail goes out only on nights with at least one target, every such night.
+        if: github.event_name == 'schedule' || inputs.send_email
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
