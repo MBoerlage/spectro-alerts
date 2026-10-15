@@ -1,0 +1,49 @@
+name: Lasair probe (dev)
+
+# Manual only: tries Lasair API calls with the LASAIR_TOKEN secret and saves the responses
+# (never the token) to the "samples" branch.
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe
+        env:
+          TOKEN: ${{ secrets.LASAIR_TOKEN }}
+        run: |
+          mkdir out && cd out
+          echo "token length: ${#TOKEN}" > index.txt
+          since=$(date -u -d '-30 days' +%F)
+          i=0
+          probe() {
+            i=$((i+1))
+            code=$(curl -sS -G --max-time 90 -H "Authorization: Token $TOKEN" -o "p$i.txt" \
+              -w "%{http_code}" "$1" "${@:2}" || echo fail)
+            echo "p$i $code $1 ${*:2}" >> index.txt
+          }
+          for host in lasair-ztf.lsst.ac.uk lasair.lsst.ac.uk; do
+            probe "https://$host/api/query/" \
+              --data-urlencode "selected=*" \
+              --data-urlencode "tables=crossmatch_tns" \
+              --data-urlencode "conditions=tns_name like '2026%'" \
+              --data-urlencode "limit=3" --data-urlencode "format=json"
+            probe "https://$host/api/query/" \
+              --data-urlencode "selected=tns_prefix,tns_name,ra,decl,type,disc_mag,disc_date" \
+              --data-urlencode "tables=crossmatch_tns" \
+              --data-urlencode "conditions=disc_date > '$since' and disc_mag < 13" \
+              --data-urlencode "limit=200" --data-urlencode "format=json"
+          done
+          cat index.txt
+      - name: Push to samples branch
+        run: |
+          cd out
+          git init -q -b samples
+          git config user.name "spectro-alerts bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add . && git commit -qm "Lasair probe $(date -u +%FT%TZ)"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" samples
