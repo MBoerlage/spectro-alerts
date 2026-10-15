@@ -29,6 +29,7 @@ def cfg() -> dict:
     c["sources"]["tns"]["enabled"] = True
     c["sources"]["rochester"]["enabled"] = False
     c["sources"]["mukai"]["enabled"] = False
+    c["sources"]["asassn"]["enabled"] = False
     return c
 
 
@@ -51,6 +52,8 @@ def fake_http(monkeypatch):
             return SimpleNamespace(json=lambda: json.loads((FIX / "seven_timer.json").read_text()))
         elif "rochesterastronomy" in url:
             body = (FIX / "rochester_active.html").read_text(encoding="latin-1")
+        elif "asassn" in url:
+            body = (FIX / "asassn_transients.html").read_text()
         elif "Koji.Mukai" in url:
             body = (FIX / "mukai_novae.html").read_text()
         elif "astronomerstelegram" in url:

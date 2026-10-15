@@ -32,6 +32,10 @@ sources:
     enabled: true
     url: https://www.rochesterastronomy.org/snimages/snactive.html
     max_age_days: 30        # skip objects not observed for this long
+  asassn:                   # ASAS-SN's own discoveries, incl. bright novae posted only to TNS
+    enabled: true
+    url: https://www.astronomy.ohio-state.edu/asassn/transients.html
+    lookback_days: 30       # by ASAS-SN detection date
   mukai:                    # confirmed galactic novae, incl. TNS-only ones
     enabled: true
     url: https://asd.gsfc.nasa.gov/Koji.Mukai/novae/novae.html

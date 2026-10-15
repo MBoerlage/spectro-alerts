@@ -4,7 +4,7 @@ import pytest
 from conftest import FIX, LOCAL_DATE, NOW
 
 from spectro_alerts import run
-from spectro_alerts.sources import mukai, rochester
+from spectro_alerts.sources import asassn, mukai, rochester
 
 
 def test_rochester_parses_latest_magnitudes_and_skips_stale():
@@ -67,3 +67,28 @@ def test_pipeline_with_standins_and_mukai_name_wins(cfg, fake_http):
     v488 = next(t for t in listed if t["name"] == "V488 Sge")
     assert "PNV J19450648+1822422" in v488["names"]
     assert v488["confirmed_nova"] and v488["aras_url"].endswith("novasge2026.html")
+
+
+def test_asassn_reads_bright_novae_and_skips_flares_and_junk_magnitudes():
+    rows = asassn.parse((FIX / "asassn_transients.html").read_text())
+    assert len(rows) == 9
+    when = datetime(2026, 9, 20, tzinfo=timezone.utc)
+    cands = {c.name: c for c in asassn.rows_to_candidates(rows, 14.0, when, 60)}
+    assert set(cands) == {"ASASSN-26fc", "V488 Sge"}
+    fc = cands["ASASSN-26fc"]
+    assert fc.extra["names"] == ["AT 2026abbx"] and fc.obj_type == "nova candidate"
+    assert fc.mag == 12.14 and fc.ra == pytest.approx(268.02829, abs=1e-4)
+    v488 = cands["V488 Sge"]
+    assert v488.obj_type == "nova" and "PNV J19450648+1822422" in v488.extra["names"]
+    # Recovery row: first-report date comes from the comment, not ASAS-SN's own detection.
+    assert v488.disc_date.date().isoformat() == "2026-08-25"
+    # ASASSN-26ez (M-dwarf flare) and the negative "magnitudes" never become candidates.
+    later = datetime(2026, 10, 15, tzinfo=timezone.utc)
+    names = {c.name for c in asassn.rows_to_candidates(rows, 30.0, later, 400)}
+    assert "ASASSN-26ez" not in names and "ASASSN-26fl" not in names
+    assert "AT2026adgn" not in names and "ASASSN-26no" in names
+
+
+def test_asassn_layout_change_is_reported():
+    with pytest.raises(ValueError):
+        asassn.parse("<html>maintenance</html>")

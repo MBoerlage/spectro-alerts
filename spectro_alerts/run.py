@@ -19,7 +19,7 @@ from . import __version__, output, skychart, visibility, weather
 from . import state as state_mod
 from .match import attach_atel_by_name, cross_match
 from .model import SourceResult
-from .sources import atel, cbat, mukai, rochester, tns
+from .sources import asassn, atel, cbat, mukai, rochester, tns
 
 log = logging.getLogger("spectro_alerts")
 
@@ -33,6 +33,8 @@ def collect(cfg: dict, now: datetime) -> list[SourceResult]:
         results.append(cbat.fetch(src["cbat_tocp"], now, ceiling))
     if src.get("tns", {}).get("enabled", True):
         results.append(tns.fetch(src["tns"], now))
+    if src.get("asassn", {}).get("enabled", False):
+        results.append(asassn.fetch(src["asassn"], now, ceiling))
     if src.get("rochester", {}).get("enabled", False):
         results.append(rochester.fetch(src["rochester"], now, ceiling))
     if src.get("mukai", {}).get("enabled", False):

@@ -14,7 +14,7 @@ from .model import Candidate
 
 # Earlier entries win as the object's display name when several sources report it.
 # Mukai first: it carries the official name (e.g. V488 Sge) once a nova is confirmed.
-SOURCE_PRIORITY = ["Mukai novae", "CBAT TOCP", "TNS", "Rochester", "ATel"]
+SOURCE_PRIORITY = ["Mukai novae", "CBAT TOCP", "TNS", "ASAS-SN", "Rochester", "ATel"]
 
 
 @dataclass

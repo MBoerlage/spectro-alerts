@@ -63,5 +63,8 @@ available. Two sources cover what it gave:
 
 - **Rochester "Latest Supernovae"** (David Bishop): bright supernovae and extragalactic novae
   with their *latest* magnitude, from the machine-readable active list.
+- **ASAS-SN transient list** (Ohio State): the survey's own discoveries, including bright
+  galactic novae it reports only to TNS, refreshed every few days. Flares and non-magnitude
+  values are skipped.
 - **Koji Mukai's galactic nova list** (NASA GSFC): confirmed galactic novae with official names
   and links to ARAS spectra, including novae reported only to TNS.
