@@ -1,0 +1,39 @@
+name: Fetch page samples (dev)
+
+# Manual only: saves raw copies of source pages to the "samples" branch so parsers can be
+# written against exactly what GitHub's runners receive.
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: "Space-separated URLs"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch
+        env:
+          URLS: ${{ inputs.urls }}
+        run: |
+          mkdir out && cd out
+          i=0
+          for u in $URLS; do
+            i=$((i+1))
+            code=$(curl -sS -L -A "SpectroAlerts/0.1 (+https://github.com/MBoerlage/spectro-alerts)" \
+              -o "page$i.html" -w "%{http_code} %{url_effective} %{content_type}" "$u" || echo "curl-failed")
+            echo "page$i.html $code $u" >> index.txt
+          done
+          cat index.txt
+      - name: Push to samples branch
+        run: |
+          cd out
+          git init -q -b samples
+          git config user.name "spectro-alerts bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add . && git commit -qm "Samples $(date -u +%FT%TZ)"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" samples
