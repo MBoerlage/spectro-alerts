@@ -40,7 +40,10 @@ def _disc(s: str) -> datetime | None:
     m = re.match(r"^(\d{4})-(\d{1,2})-(\d{1,2})(\.\d+)?$", s.strip())
     if not m:
         return None
-    base = datetime(int(m[1]), int(m[2]), int(m[3]), tzinfo=timezone.utc)
+    try:  # the table has typos such as day 31 in a 30-day month
+        base = datetime(int(m[1]), int(m[2]), int(m[3]), tzinfo=timezone.utc)
+    except ValueError:
+        return None
     return base + timedelta(days=float(m[4] or 0))
 
 
@@ -113,6 +116,10 @@ def rows_to_candidates(
             continue
         if not (MAG_RANGE[0] <= mag <= mag_ceiling):
             continue
+        # CV-candidate rows sometimes carry an amplitude (e.g. 3.6) in the magnitude column; only
+        # a nova is believable that bright.
+        if mag < 6.0 and "nova" not in r["comment"].lower():
+            continue
         try:
             ra, dec = parse_sexagesimal(r["ra"], r["dec"])
         except ValueError as exc:
@@ -120,11 +127,8 @@ def rows_to_candidates(
             continue
         # Recoveries of known objects carry the original discovery date in the comment.
         orig = re.search(r"discovered (\d{4})/(\d{2})/(\d{2})", r["comment"])
-        first = (
-            datetime(int(orig[1]), int(orig[2]), int(orig[3]), tzinfo=timezone.utc)
-            if orig
-            else disc
-        )
+        first = _disc(f"{orig[1]}-{orig[2]}-{orig[3]}") if orig else None
+        first = first or disc
         name, aliases = _names(r["id"], r["other"])
         if not name:
             continue

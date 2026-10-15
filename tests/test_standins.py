@@ -92,3 +92,34 @@ def test_asassn_reads_bright_novae_and_skips_flares_and_junk_magnitudes():
 def test_asassn_layout_change_is_reported():
     with pytest.raises(ValueError):
         asassn.parse("<html>maintenance</html>")
+
+
+def test_a_crashing_reader_is_reported_not_fatal(cfg, fake_http, monkeypatch):
+    cfg["sources"]["asassn"]["enabled"] = True
+    monkeypatch.setattr(asassn, "rows_to_candidates", lambda *a: 1 / 0)
+    results = run.collect(cfg, NOW)
+    bad = next(r for r in results if r.source == "ASAS-SN")
+    assert not bad.ok and "reader crashed" in bad.error
+    assert all(r.ok for r in results if r.source != "ASAS-SN")
+
+
+def test_asassn_tolerates_impossible_dates():
+    assert asassn._disc("2026-09-31.2") is None
+    assert asassn._disc("2026-10-9.5").hour == 12
+
+
+def test_asassn_rejects_amplitudes_posing_as_magnitudes():
+    row = {
+        "id": "ASASSN-26ex",
+        "other": "---",
+        "atel_url": "",
+        "ra": "16:46:37.81",
+        "dec": "-63:14:59.8",
+        "discovery": "2026-10-10.78",
+        "mag": "3.63",
+        "spec_class": "",
+        "comment": "CV candidate, no Vizier match, g>17.8 on 2026-08-03.78",
+    }
+    assert asassn.rows_to_candidates([row], 12, NOW, 30) == []
+    nova = dict(row, comment="Galactic nova candidate, posted to TNS")
+    assert [c.name for c in asassn.rows_to_candidates([nova], 12, NOW, 30)] == ["ASASSN-26ex"]

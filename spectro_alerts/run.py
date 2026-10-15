@@ -28,19 +28,23 @@ def collect(cfg: dict, now: datetime) -> list[SourceResult]:
     f = cfg["filters"]
     src = cfg["sources"]
     ceiling = f["mag_max"] + f["watch_margin"]
+    plan = [
+        ("cbat_tocp", "CBAT TOCP", True, lambda c: cbat.fetch(c, now, ceiling)),
+        ("tns", "TNS", True, lambda c: tns.fetch(c, now)),
+        ("asassn", "ASAS-SN", False, lambda c: asassn.fetch(c, now, ceiling)),
+        ("rochester", "Rochester", False, lambda c: rochester.fetch(c, now, ceiling)),
+        ("mukai", "Mukai novae", False, lambda c: mukai.fetch(c, now, ceiling)),
+        ("atel", "ATel", True, lambda c: atel.fetch(c, now)),
+    ]
     results = []
-    if src.get("cbat_tocp", {}).get("enabled", True):
-        results.append(cbat.fetch(src["cbat_tocp"], now, ceiling))
-    if src.get("tns", {}).get("enabled", True):
-        results.append(tns.fetch(src["tns"], now))
-    if src.get("asassn", {}).get("enabled", False):
-        results.append(asassn.fetch(src["asassn"], now, ceiling))
-    if src.get("rochester", {}).get("enabled", False):
-        results.append(rochester.fetch(src["rochester"], now, ceiling))
-    if src.get("mukai", {}).get("enabled", False):
-        results.append(mukai.fetch(src["mukai"], now, ceiling))
-    if src.get("atel", {}).get("enabled", True):
-        results.append(atel.fetch(src["atel"], now))
+    for key, name, default_on, run_source in plan:
+        if not src.get(key, {}).get("enabled", default_on):
+            continue
+        try:
+            results.append(run_source(src[key]))
+        except Exception as exc:  # noqa: BLE001 - a broken reader must never stop the run
+            log.exception("%s reader crashed", name)
+            results.append(SourceResult(source=name, ok=False, error=f"reader crashed: {exc}"))
     return results
 
 
