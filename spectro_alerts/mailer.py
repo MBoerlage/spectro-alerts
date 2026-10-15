@@ -261,7 +261,15 @@ def _table(rows: list[dict], muted: bool = False) -> str:
     )
 
 
-def html_body(p: dict, chart_cid: str | None = None) -> str:
+def html_body(
+    p: dict, chart_cid: str | None = None, chart_src: str | None = None, page: bool = False
+) -> str:
+    """Shared by the email (chart as cid: image) and the GitHub Pages digest (chart as a file).
+
+    On the page everything is listed (no 5-item cap) and the footer links the raw JSON.
+    """
+    if chart_cid:
+        chart_src = f"cid:{chart_cid}"
     e = html.escape
     w = p.get("weather", {})
     n = p["night"]
@@ -290,12 +298,12 @@ def html_body(p: dict, chart_cid: str | None = None) -> str:
         parts += [
             f"<h2 {h2}>Watch list ({len(p['watch'])})</h2>",
             f"<div {note}>Visible tonight, V {f['mag_max']}–{low} or brightness unknown</div>",
-            _table(p["watch"][:5], muted=True),
+            _table(p["watch"] if page else p["watch"][:5], muted=True),
         ]
-    if chart_cid:
+    if chart_src:
         parts += [
             f"<h2 {h2}>Sky tracks tonight</h2>",
-            f'<img src="cid:{chart_cid}" alt="Polar chart of tonight\'s target tracks" '
+            f'<img src="{chart_src}" alt="Polar chart of tonight\'s target tracks" '
             'width="560" style="display:block;width:100%;max-width:560px;height:auto;'
             'border-radius:8px">',
         ]
@@ -305,7 +313,7 @@ def html_body(p: dict, chart_cid: str | None = None) -> str:
         parts += [
             f'<div style="font-size:13px;margin:0 0 4px"><a href="{e(i["url"])}">'
             f"{e(i['title'])}</a></div>"
-            for i in atels[:5]
+            for i in (atels if page else atels[:5])
         ]
     status = " · ".join(
         f"{e(s['source'])} {'✓' if s['ok'] else '✗ failed'}" for s in p["source_status"]
@@ -313,7 +321,12 @@ def html_body(p: dict, chart_cid: str | None = None) -> str:
     parts.append(
         f'<div style="font-size:12px;color:#5f6368;border-top:1px solid #eceff1;'
         f'margin-top:22px;padding-top:8px">{status} · '
-        f'<a href="{PAGE_URL}">full digest page</a></div></div>'
+        + (
+            f'generated {p["generated_utc"]} UTC · <a href="candidates.json">candidates.json</a>'
+            if page
+            else f'<a href="{PAGE_URL}">full digest page</a>'
+        )
+        + "</div></div>"
     )
     return "".join(parts)
 
