@@ -8,9 +8,13 @@ on:
   workflow_dispatch:
     inputs:
       send_email:
-        description: "Email the digest"
+        description: "Email the digest (only if there are targets)"
         type: boolean
         default: true
+      always_send:
+        description: "Send even with no targets (test)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -53,9 +57,9 @@ jobs:
           fi
 
       - name: Email the digest
-        # Scheduled runs always send; manual runs send unless the box is unticked.
+        # Mail goes out only on nights with at least one target, every such night.
         if: github.event_name == 'schedule' || inputs.send_email
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
-        run: python -m spectro_alerts.mailer
+        run: python -m spectro_alerts.mailer ${{ inputs.always_send && '--always' || '' }}

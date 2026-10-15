@@ -60,13 +60,14 @@ def _links(t: dict) -> list[tuple[str, str]]:
     return out
 
 
+SKY_WORDS = {"GO": "YES", "MAYBE": "MAYBE", "NO-GO": "NO", "UNKNOWN": "UNKNOWN"}
+
+
 def subject(p: dict) -> str:
-    w = p.get("weather", {})
-    verdict = w.get("verdict", "UNKNOWN")
-    n = len(p["targets"])
-    what = f"{n} target{'s' if n != 1 else ''}" if n else "no targets"
-    extra = f", {len(p.get('poorly_placed', []))} low" if p.get("poorly_placed") else ""
-    return f"{verdict} tonight: {what}{extra} ({p['night']['date']})"
+    """e.g. "SPECTRO ALERT: YES, good skies? MAYBE" (Matt's format, 2026-10-15)."""
+    alert = "YES" if p["targets"] else "NO"
+    sky = SKY_WORDS.get(p.get("weather", {}).get("verdict", "UNKNOWN"), "UNKNOWN")
+    return f"SPECTRO ALERT: {alert}, good skies? {sky}"
 
 
 def _sections(p: dict) -> list[tuple[str, list[dict], str]]:
@@ -194,9 +195,14 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--json", default="docs/candidates.json")
     ap.add_argument("--dry-run", action="store_true", help="print the email instead of sending")
+    ap.add_argument("--always", action="store_true", help="send even with no targets (tests)")
     args = ap.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
     payload = json.loads(Path(args.json).read_text())
+    if not payload["targets"] and not args.always:
+        # Matt wants mail only on nights with at least one target that passes every filter.
+        log.info("No targets tonight: no email sent")
+        return 0
     if args.dry_run:
         print(subject(payload) + "\n\n" + text_body(payload))
         return 0
