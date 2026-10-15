@@ -21,7 +21,10 @@ LOCAL_DATE = datetime(2026, 10, 15, 12, tzinfo=ZoneInfo("America/Chicago"))
 
 @pytest.fixture
 def cfg() -> dict:
-    return yaml.safe_load((ROOT / "config.yaml").read_text())
+    c = yaml.safe_load((ROOT / "config.yaml").read_text())
+    # Tests pin the ceiling so they don't change when the config is tuned.
+    c["filters"]["mag_max"] = 12.0
+    return c
 
 
 @pytest.fixture

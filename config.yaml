@@ -8,7 +8,7 @@ site:
   timezone: America/Chicago
 
 filters:
-  mag_max: 12.0             # brightest-enough ceiling for the StarEx LR (V); adjustable 8-12
+  mag_max: 10.0             # practical StarEx LR limit (V); adjustable 8-12
   watch_margin: 2.0         # objects up to mag_max + this go on the watch list
   min_alt_deg: 20           # backyard horizon
   min_hours: 1.0            # minimum continuous time above min_alt in darkness tonight
