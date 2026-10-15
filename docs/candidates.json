@@ -1,7 +1,7 @@
 {
  "schema_version": 1,
  "pipeline_version": "0.1.0",
- "generated_utc": "2026-10-15 18:38",
+ "generated_utc": "2026-10-15 18:50",
  "site": {
   "name": "Tomball, TX",
   "lat": 30.0972,
@@ -20,24 +20,24 @@
  },
  "weather": {
   "verdict": "GO",
-  "line": "GO: clear 22:00-00:00, cloud \u22641%, gusts \u22649 mph; seeing 2-2.5\", transparency 4/8 (7Timer, 1 = best)",
+  "line": "GO: clear 22:00-00:00, cloud \u22641%, gusts \u226411 mph; seeing 2-2.5\", transparency 4/8 (7Timer, 1 = best)",
   "window": "18:00-00:00",
   "clear_from": "22:00",
   "clear_to": "00:00",
   "hours": [
    {
     "hour": "18:00",
-    "cloud_eff": 8.0,
-    "cloud_low": 8.0,
+    "cloud_eff": 46.0,
+    "cloud_low": 46.0,
     "cloud_mid": 0.0,
     "cloud_high": 0.0,
     "rain_pct": 2.0,
-    "wind_mph": 7.8,
-    "gust_mph": 14.3,
-    "temp_f": 88.5,
-    "dew_point_f": 63.8,
-    "clear": true,
-    "why_not": ""
+    "wind_mph": 7.6,
+    "gust_mph": 11.9,
+    "temp_f": 87.6,
+    "dew_point_f": 63.0,
+    "clear": false,
+    "why_not": "cloud 46%"
    },
    {
     "hour": "19:00",
@@ -46,10 +46,10 @@
     "cloud_mid": 0.0,
     "cloud_high": 0.0,
     "rain_pct": 0.0,
-    "wind_mph": 8.1,
+    "wind_mph": 7.0,
     "gust_mph": 19.0,
-    "temp_f": 83.6,
-    "dew_point_f": 61.3,
+    "temp_f": 83.5,
+    "dew_point_f": 61.2,
     "clear": false,
     "why_not": "gusts 19 mph"
    },
@@ -60,52 +60,52 @@
     "cloud_mid": 0.0,
     "cloud_high": 0.0,
     "rain_pct": 0.0,
-    "wind_mph": 7.9,
-    "gust_mph": 21.7,
-    "temp_f": 80.3,
-    "dew_point_f": 66.1,
+    "wind_mph": 7.0,
+    "gust_mph": 19.7,
+    "temp_f": 80.0,
+    "dew_point_f": 65.8,
     "clear": false,
-    "why_not": "gusts 22 mph"
+    "why_not": "gusts 20 mph"
    },
    {
     "hour": "21:00",
-    "cloud_eff": 0.0,
-    "cloud_low": 0.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 6.7,
-    "gust_mph": 18.8,
-    "temp_f": 78.5,
-    "dew_point_f": 70.3,
-    "clear": false,
-    "why_not": "gusts 19 mph"
-   },
-   {
-    "hour": "22:00",
-    "cloud_eff": 0.0,
-    "cloud_low": 0.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 4.1,
-    "gust_mph": 8.9,
-    "temp_f": 77.2,
-    "dew_point_f": 72.0,
-    "clear": true,
-    "why_not": ""
-   },
-   {
-    "hour": "23:00",
     "cloud_eff": 1.0,
     "cloud_low": 1.0,
     "cloud_mid": 0.0,
     "cloud_high": 0.0,
     "rain_pct": 0.0,
-    "wind_mph": 1.5,
-    "gust_mph": 6.3,
-    "temp_f": 76.5,
-    "dew_point_f": 72.0,
+    "wind_mph": 6.7,
+    "gust_mph": 19.2,
+    "temp_f": 77.9,
+    "dew_point_f": 69.8,
+    "clear": false,
+    "why_not": "gusts 19 mph"
+   },
+   {
+    "hour": "22:00",
+    "cloud_eff": 1.0,
+    "cloud_low": 1.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 3.1,
+    "gust_mph": 11.2,
+    "temp_f": 76.7,
+    "dew_point_f": 71.5,
+    "clear": true,
+    "why_not": ""
+   },
+   {
+    "hour": "23:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 3.6,
+    "gust_mph": 7.4,
+    "temp_f": 75.9,
+    "dew_point_f": 71.4,
     "clear": true,
     "why_not": ""
    }
@@ -310,14 +310,6 @@
    "names": [],
    "of_interest": false,
    "summary": "We observed 3I/ATLAS with the Low Resolution Imaging Spectrometer (LRIS) on the 10-m Keck I telescope atop Maunakea on 2026 May 15, 05:56:01-06:41:40 UTC (N041; PI I. ..."
-  },
-  {
-   "title": "ATel 18097: Extreme Velocity Gradients in the Atmosphere of Betelgeuse: Is Another Dimming Event Imminent?",
-   "url": "https://www.astronomerstelegram.org/?read=18097",
-   "published": "2026-10-08T18:50:15+00:00",
-   "names": [],
-   "of_interest": false,
-   "summary": "Red supergiant Betelgeuse (Alpha Ori; HD 39801; MI1-2 Iab) underwent a historical Great Dimming event during 2019/2020, reaching a minimum of V ~ 1.6 mag in February 2020 (see ATel #13341, #13365, #13410, #13439,\u00c2 #13512,\u00c2 #13518,\u00c2 #13601, #13901, #13982, #15240, #16001, and #16501), close to the brightness minimum of the long secondary period (LSP). ..."
   }
  ]
 }
