@@ -1,7 +1,7 @@
 {
  "schema_version": 1,
  "pipeline_version": "0.1.0",
- "generated_utc": "2026-10-15 17:26",
+ "generated_utc": "2026-10-15 17:59",
  "site": {
   "name": "Tomball, TX",
   "lat": 30.0972,
@@ -14,30 +14,30 @@
   "watch_margin": 2.0,
   "min_alt_deg": 20,
   "min_hours": 1.0,
-  "sun_alt_max_deg": -18,
+  "sun_alt_max_deg": -12,
   "moon_min_sep_deg": 30,
   "match_radius_arcsec": 5
  },
  "weather": {
   "verdict": "GO",
-  "line": "GO: clear 22:00-00:00, cloud \u22640%, gusts \u226412 mph; seeing 2-2.5\", transparency 4/8 (7Timer, 1 = best)",
+  "line": "GO: clear 22:00-00:00, cloud \u22641%, gusts \u22649 mph; seeing 2-2.5\", transparency 4/8 (7Timer, 1 = best)",
   "window": "18:00-00:00",
   "clear_from": "22:00",
   "clear_to": "00:00",
   "hours": [
    {
     "hour": "18:00",
-    "cloud_eff": 23.0,
-    "cloud_low": 23.0,
+    "cloud_eff": 8.0,
+    "cloud_low": 8.0,
     "cloud_mid": 0.0,
     "cloud_high": 0.0,
     "rain_pct": 2.0,
-    "wind_mph": 11.3,
-    "gust_mph": 17.2,
-    "temp_f": 87.3,
-    "dew_point_f": 67.0,
-    "clear": false,
-    "why_not": "cloud 23%, gusts 17 mph"
+    "wind_mph": 9.3,
+    "gust_mph": 14.3,
+    "temp_f": 88.5,
+    "dew_point_f": 63.1,
+    "clear": true,
+    "why_not": ""
    },
    {
     "hour": "19:00",
@@ -46,12 +46,12 @@
     "cloud_mid": 0.0,
     "cloud_high": 0.0,
     "rain_pct": 0.0,
-    "wind_mph": 11.4,
-    "gust_mph": 20.6,
-    "temp_f": 83.0,
-    "dew_point_f": 67.7,
+    "wind_mph": 9.7,
+    "gust_mph": 19.0,
+    "temp_f": 83.6,
+    "dew_point_f": 64.7,
     "clear": false,
-    "why_not": "gusts 21 mph"
+    "why_not": "gusts 19 mph"
    },
    {
     "hour": "20:00",
@@ -60,10 +60,10 @@
     "cloud_mid": 0.0,
     "cloud_high": 0.0,
     "rain_pct": 0.0,
-    "wind_mph": 9.4,
-    "gust_mph": 22.4,
-    "temp_f": 80.2,
-    "dew_point_f": 68.7,
+    "wind_mph": 8.5,
+    "gust_mph": 21.7,
+    "temp_f": 80.3,
+    "dew_point_f": 67.4,
     "clear": false,
     "why_not": "gusts 22 mph"
    },
@@ -74,12 +74,12 @@
     "cloud_mid": 0.0,
     "cloud_high": 0.0,
     "rain_pct": 0.0,
-    "wind_mph": 7.2,
-    "gust_mph": 20.1,
-    "temp_f": 78.7,
-    "dew_point_f": 66.9,
+    "wind_mph": 5.7,
+    "gust_mph": 18.8,
+    "temp_f": 78.5,
+    "dew_point_f": 69.1,
     "clear": false,
-    "why_not": "gusts 20 mph"
+    "why_not": "gusts 19 mph"
    },
    {
     "hour": "22:00",
@@ -88,24 +88,24 @@
     "cloud_mid": 0.0,
     "cloud_high": 0.0,
     "rain_pct": 0.0,
-    "wind_mph": 1.5,
-    "gust_mph": 11.9,
-    "temp_f": 76.9,
-    "dew_point_f": 70.3,
+    "wind_mph": 3.9,
+    "gust_mph": 8.9,
+    "temp_f": 77.2,
+    "dew_point_f": 70.2,
     "clear": true,
     "why_not": ""
    },
    {
     "hour": "23:00",
-    "cloud_eff": 0.0,
-    "cloud_low": 0.0,
+    "cloud_eff": 1.0,
+    "cloud_low": 1.0,
     "cloud_mid": 0.0,
     "cloud_high": 0.0,
     "rain_pct": 0.0,
-    "wind_mph": 1.6,
-    "gust_mph": 6.9,
-    "temp_f": 75.8,
-    "dew_point_f": 70.6,
+    "wind_mph": 2.4,
+    "gust_mph": 6.3,
+    "temp_f": 76.5,
+    "dew_point_f": 70.2,
     "clear": true,
     "why_not": ""
    }
@@ -158,8 +158,8 @@
  "night": {
   "date": "2026-10-15",
   "sunset": "18:55",
-  "dark_start": "20:15",
-  "dark_end": "06:05"
+  "dark_start": "19:45",
+  "dark_end": "06:30"
  },
  "source_status": [
   {
@@ -186,7 +186,16 @@
  ],
  "targets": [],
  "watch": [],
+ "poorly_placed": [],
  "atel_recent": [
+  {
+   "title": "ATel 18105: Fermi-LAT detection of enhanced gamma-ray activity from the BL Lac source MG2 J130304+2434",
+   "url": "https://www.astronomerstelegram.org/?read=18105",
+   "published": "2026-10-15T17:38:14+00:00",
+   "names": [],
+   "of_interest": false,
+   "summary": "The Large Area Telescope (LAT), one of the two instruments on the Fermi Gamma-ray Space Telescope, has observed enhanced gamma-ray activity from a source positionally consistent with the BL Lac source MG2 J130304+2434, also known as 4FGL J1303.0+2434 (Abdollahi et al. ..."
+  },
   {
    "title": "ATel 18104: Fermi-LAT detection of renewed gamma-ray activity from the FSRQ CTA 102",
    "url": "https://www.astronomerstelegram.org/?read=18104",
