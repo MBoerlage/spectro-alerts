@@ -2,10 +2,15 @@ name: Daily alert run
 
 on:
   schedule:
-    # 20:30 UTC = 15:30 CDT in summer, 14:30 CST in winter; both finish before the 16:00
-    # Claude task, so no change is needed when Daylight Saving Time ends.
+    # 20:30 UTC = 15:30 CDT in summer, 14:30 CST in winter: the email lands before dusk
+    # either way, so no change is needed when Daylight Saving Time ends.
     - cron: "30 20 * * *"
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      send_email:
+        description: "Email the digest"
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -46,3 +51,11 @@ jobs:
             git commit -m "Daily run $(date -u +%Y-%m-%dT%H:%MZ)"
             git push
           fi
+
+      - name: Email the digest
+        # Scheduled runs always send; manual runs send unless the box is unticked.
+        if: github.event_name == 'schedule' || inputs.send_email
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: python -m spectro_alerts.mailer

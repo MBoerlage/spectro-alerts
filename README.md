@@ -48,3 +48,10 @@ python -m spectro_alerts.run --date 2026-10-15
 - `docs/candidates.json`: targets, watch list, recent ATels, per-source status.
 - `docs/index.html`: the same as a readable page.
 - `state/objects.json`: first-seen dates, names, sources and magnitude history (90 days).
+
+## Email
+
+After each run the workflow emails the digest through [Resend](https://resend.com)
+(`python -m spectro_alerts.mailer`; add `--dry-run` to print it instead). It needs two
+repository secrets: `RESEND_API_KEY` and `EMAIL_TO`. Manual runs have a "Email the digest"
+box to untick for silent test runs.
