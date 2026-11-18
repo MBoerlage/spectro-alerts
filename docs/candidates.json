@@ -1,7 +1,7 @@
 {
  "schema_version": 1,
  "pipeline_version": "0.1.0",
- "generated_utc": "2026-11-17 03:02",
+ "generated_utc": "2026-11-18 02:31",
  "site": {
   "name": "Tomball, TX",
   "lat": 30.0972,
@@ -19,17 +19,327 @@
   "match_radius_arcsec": 5
  },
  "weather": {
-  "verdict": "MAYBE",
-  "line": "MAYBE: Open-Meteo unavailable; 7Timer says mostly clear",
+  "verdict": "GO",
+  "line": "GO: clear 17:00-21:00, cloud \u226410%, gusts \u226412 mph; seeing >2.5\", transparency 2/8 (7Timer, 1 = best)",
   "window": "17:00-00:00",
-  "clear_from": null,
-  "clear_to": null,
-  "hours": [],
-  "hours_night": [],
+  "clear_from": "17:00",
+  "clear_to": "21:00",
+  "hours": [
+   {
+    "hour": "17:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 4.5,
+    "gust_mph": 8.3,
+    "temp_f": 65.6,
+    "dew_point_f": 34.1,
+    "clear": true,
+    "why_not": ""
+   },
+   {
+    "hour": "18:00",
+    "cloud_eff": 10.0,
+    "cloud_low": 10.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 5.1,
+    "gust_mph": 7.2,
+    "temp_f": 59.8,
+    "dew_point_f": 38.4,
+    "clear": true,
+    "why_not": ""
+   },
+   {
+    "hour": "19:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 5.7,
+    "gust_mph": 8.3,
+    "temp_f": 58.0,
+    "dew_point_f": 39.9,
+    "clear": true,
+    "why_not": ""
+   },
+   {
+    "hour": "20:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 4.0,
+    "gust_mph": 12.5,
+    "temp_f": 56.3,
+    "dew_point_f": 37.4,
+    "clear": true,
+    "why_not": ""
+   },
+   {
+    "hour": "21:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 5.1,
+    "gust_mph": 15.2,
+    "temp_f": 54.4,
+    "dew_point_f": 37.2,
+    "clear": false,
+    "why_not": "gusts 15 mph"
+   },
+   {
+    "hour": "22:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 3.6,
+    "gust_mph": 11.2,
+    "temp_f": 52.9,
+    "dew_point_f": 37.6,
+    "clear": true,
+    "why_not": ""
+   },
+   {
+    "hour": "23:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 5.3,
+    "gust_mph": 13.4,
+    "temp_f": 52.2,
+    "dew_point_f": 37.4,
+    "clear": true,
+    "why_not": ""
+   }
+  ],
+  "hours_night": [
+   {
+    "hour": "17:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 4.5,
+    "gust_mph": 8.3,
+    "temp_f": 65.6,
+    "dew_point_f": 34.1,
+    "clear": true,
+    "why_not": "",
+    "in_verdict": true
+   },
+   {
+    "hour": "18:00",
+    "cloud_eff": 10.0,
+    "cloud_low": 10.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 5.1,
+    "gust_mph": 7.2,
+    "temp_f": 59.8,
+    "dew_point_f": 38.4,
+    "clear": true,
+    "why_not": "",
+    "in_verdict": true
+   },
+   {
+    "hour": "19:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 5.7,
+    "gust_mph": 8.3,
+    "temp_f": 58.0,
+    "dew_point_f": 39.9,
+    "clear": true,
+    "why_not": "",
+    "in_verdict": true
+   },
+   {
+    "hour": "20:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 4.0,
+    "gust_mph": 12.5,
+    "temp_f": 56.3,
+    "dew_point_f": 37.4,
+    "clear": true,
+    "why_not": "",
+    "in_verdict": true
+   },
+   {
+    "hour": "21:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 5.1,
+    "gust_mph": 15.2,
+    "temp_f": 54.4,
+    "dew_point_f": 37.2,
+    "clear": false,
+    "why_not": "gusts 15 mph",
+    "in_verdict": true
+   },
+   {
+    "hour": "22:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 3.6,
+    "gust_mph": 11.2,
+    "temp_f": 52.9,
+    "dew_point_f": 37.6,
+    "clear": true,
+    "why_not": "",
+    "in_verdict": true
+   },
+   {
+    "hour": "23:00",
+    "cloud_eff": 0.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 0.0,
+    "rain_pct": 0.0,
+    "wind_mph": 5.3,
+    "gust_mph": 13.4,
+    "temp_f": 52.2,
+    "dew_point_f": 37.4,
+    "clear": true,
+    "why_not": "",
+    "in_verdict": true
+   },
+   {
+    "hour": "00:00",
+    "cloud_eff": 0.5,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 1.0,
+    "rain_pct": 0.0,
+    "wind_mph": 5.8,
+    "gust_mph": 15.2,
+    "temp_f": 51.8,
+    "dew_point_f": 37.5,
+    "clear": false,
+    "why_not": "gusts 15 mph",
+    "in_verdict": false
+   },
+   {
+    "hour": "01:00",
+    "cloud_eff": 4.5,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 9.0,
+    "rain_pct": 0.0,
+    "wind_mph": 3.6,
+    "gust_mph": 12.8,
+    "temp_f": 50.9,
+    "dew_point_f": 37.5,
+    "clear": true,
+    "why_not": "",
+    "in_verdict": false
+   },
+   {
+    "hour": "02:00",
+    "cloud_eff": 51.0,
+    "cloud_low": 2.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 100.0,
+    "rain_pct": 0.0,
+    "wind_mph": 4.6,
+    "gust_mph": 10.7,
+    "temp_f": 50.4,
+    "dew_point_f": 38.3,
+    "clear": false,
+    "why_not": "cloud 51%",
+    "in_verdict": false
+   },
+   {
+    "hour": "03:00",
+    "cloud_eff": 50.5,
+    "cloud_low": 1.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 100.0,
+    "rain_pct": 0.0,
+    "wind_mph": 5.2,
+    "gust_mph": 11.0,
+    "temp_f": 49.9,
+    "dew_point_f": 40.1,
+    "clear": false,
+    "why_not": "cloud 50%",
+    "in_verdict": false
+   },
+   {
+    "hour": "04:00",
+    "cloud_eff": 50.0,
+    "cloud_low": 0.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 100.0,
+    "rain_pct": 0.0,
+    "wind_mph": 5.1,
+    "gust_mph": 13.2,
+    "temp_f": 49.4,
+    "dew_point_f": 42.5,
+    "clear": false,
+    "why_not": "cloud 50%",
+    "in_verdict": false
+   },
+   {
+    "hour": "05:00",
+    "cloud_eff": 37.9,
+    "cloud_low": 3.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 72.0,
+    "rain_pct": 0.0,
+    "wind_mph": 5.9,
+    "gust_mph": 14.3,
+    "temp_f": 49.1,
+    "dew_point_f": 44.5,
+    "clear": false,
+    "why_not": "cloud 38%",
+    "in_verdict": false
+   },
+   {
+    "hour": "06:00",
+    "cloud_eff": 50.0,
+    "cloud_low": 2.0,
+    "cloud_mid": 0.0,
+    "cloud_high": 98.0,
+    "rain_pct": 0.0,
+    "wind_mph": 6.0,
+    "gust_mph": 15.0,
+    "temp_f": 49.2,
+    "dew_point_f": 46.4,
+    "clear": false,
+    "why_not": "cloud 50%",
+    "in_verdict": false
+   }
+  ],
   "seven_timer": {
    "points": [
     {
-     "time_utc": "2026-11-17 00:00",
+     "time_utc": "2026-11-18 00:00",
      "cloud_max_pct": 6,
      "seeing": 8,
      "transparency": 2,
@@ -37,7 +347,7 @@
      "clear": true
     },
     {
-     "time_utc": "2026-11-17 03:00",
+     "time_utc": "2026-11-18 03:00",
      "cloud_max_pct": 6,
      "seeing": 8,
      "transparency": 2,
@@ -45,10 +355,10 @@
      "clear": true
     },
     {
-     "time_utc": "2026-11-17 06:00",
+     "time_utc": "2026-11-18 06:00",
      "cloud_max_pct": 6,
      "seeing": 8,
-     "transparency": 2,
+     "transparency": 3,
      "prec_type": "none",
      "clear": true
     }
@@ -58,9 +368,7 @@
    "seeing_arcsec": ">2.5",
    "transparency_best": 2
   },
-  "errors": {
-   "Open-Meteo": "HTTPSConnectionPool(host='api.open-meteo.com', port=443): Read timed out. (read timeout=30)"
-  },
+  "errors": {},
   "clear_outside_url": "https://clearoutside.com/forecast/30.10/-95.62",
   "thresholds": {
    "enabled": true,
@@ -74,9 +382,9 @@
   }
  },
  "night": {
-  "date": "2026-11-16",
+  "date": "2026-11-17",
   "sunset": "17:30",
-  "sunrise": "06:50",
+  "sunrise": "06:55",
   "dark_start": "18:20",
   "dark_end": "05:55"
  },
@@ -86,7 +394,7 @@
    "ok": true,
    "error": "",
    "fetched": 2702,
-   "candidates": 6
+   "candidates": 4
   },
   {
    "source": "ASAS-SN",
@@ -97,9 +405,9 @@
   },
   {
    "source": "Rochester",
-   "ok": false,
-   "error": "Rochester active list: table header not found (page changed?)",
-   "fetched": 0,
+   "ok": true,
+   "error": "",
+   "fetched": 7631,
    "candidates": 0
   },
   {
@@ -114,66 +422,11 @@
    "ok": true,
    "error": "",
    "fetched": 10,
-   "candidates": 0
+   "candidates": 1
   }
  ],
  "targets": [],
- "watch": [
-  {
-   "id": "TCP J05210764+2338213",
-   "name": "TCP J05210764+2338213",
-   "names": [
-    "TCP J05210764+2338213"
-   ],
-   "obj_type": "transient",
-   "ra": 80.281833,
-   "dec": 23.63925,
-   "ra_hms": "05:21:07.64",
-   "dec_dms": "+23:38:21.3",
-   "mag": 10.3,
-   "mag_band": "clear",
-   "mag_kind": "discovery",
-   "mag_source": "CBAT TOCP",
-   "disc_date": "2026-10-18T09:38:52.800000+00:00",
-   "first_source": "CBAT TOCP",
-   "is_new": false,
-   "first_seen_by_pipeline": "2026-10-19T23:51+00:00",
-   "visibility": {
-    "hours": 9.17,
-    "start": "20:45",
-    "end": "05:55",
-    "max_alt": 83.6,
-    "max_alt_time": "02:00",
-    "moon_sep": 26.8,
-    "moon_illum": 0.47
-   },
-   "moon_warning": true,
-   "reports": [
-    {
-     "name": "TCP J05210764+2338213",
-     "ra": 80.28183333333332,
-     "dec": 23.63925,
-     "source": "CBAT TOCP",
-     "url": "http://cbat.eps.harvard.edu/unconf/followups/J05210764+2338213.html",
-     "mag": 10.3,
-     "band": "clear",
-     "mag_kind": "discovery",
-     "disc_date": "2026-10-18T09:38:52.800000+00:00",
-     "obj_type": "transient",
-     "extra": {
-      "band_letter": "C",
-      "columns": "Tau       0 0",
-      "followup_summary": "enter Origins/Harvard EPS/Harvard CBAT \"Transient Object Followup Reports\" TCP J05210764+2338213 TCP J05210764+2338213 2026 10 18.4020* 05 21 07.64 +23 38 21.3 10.3 C Tau 0 0 2026 10 18.4020 Discovered by B.Kumar (Golden Ears Observatory Transient Survey - GEOTS) at Golden Ears Observatory, Maple Ridge, BC, Canada, in three 30-second unfiltered exposures using a 0.36-m f/2 Schmidt-Cassegrain + CMOS, with magnitude 10.3 under limiting magnitude 17.6. https://www.wis-tns.org/system/files/uploaded/GEOTS/tns_2026afvp_atrep_328880_GEOTS.png 2026 08 06.4109 This is V1452 TAURI = NOVA TAURI 2026 = TCP J05210763+2338194 K. Sokolovsky, K. Barnhart, D. Perla, P. Acharya, J. Worley, V. Antoniou, and E. Aydi, Texas Tech University, report their discovery on 2026 Aug. 6.411 UT. Best, Stanislav Korotkiy",
-      "spectroscopically_confirmed": false
-     }
-    }
-   ],
-   "spectroscopically_confirmed": false,
-   "has_atel": false,
-   "confirmed_nova": false,
-   "aras_url": ""
-  }
- ],
+ "watch": [],
  "poorly_placed": [],
  "skipped": [
   {
@@ -194,6 +447,14 @@
   }
  ],
  "atel_recent": [
+  {
+   "title": "ATel 18157: H.E.S.S. discovery of the radio-loud AGN PKS 0521-365 at very-high-energy gamma rays",
+   "url": "https://www.astronomerstelegram.org/?read=18157",
+   "published": "2026-11-17T18:19:50+00:00",
+   "names": [],
+   "of_interest": true,
+   "summary": "PKS 0521-365 (RA: 05h22m57.98s, DEC: \u00e2\u20ac\u201c36d27m30.85s, J2000) is a nearby (z=0.057) AGN whose classification remains ambiguous, with properties intermediate between those of blazars and radio galaxies (D'Ammando et al. ..."
+  },
   {
    "title": "ATel 18156: The dominating active region AR14566 and its peak flaring index",
    "url": "https://www.astronomerstelegram.org/?read=18156",
@@ -235,43 +496,6 @@
    "names": [],
    "of_interest": true,
    "summary": "At 05:50 on 2026-11-09 UT, the MAXI/GSC nova alert system triggered on a source at a position consistent with that of the RS CVn star GT Mus. The X-ray flux averaged over 22 scans was 5 (+0.8/-3) & times; 10-10 erg s-1 cm-2 (2-10 keV). ..."
-  },
-  {
-   "title": "ATel 18151: Radio non-detection of nearby Type Ia SN 2026ahvu",
-   "url": "https://www.astronomerstelegram.org/?read=18151",
-   "published": "2026-11-11T00:45:33+00:00",
-   "names": [
-    "SN 2026ahvu"
-   ],
-   "of_interest": false,
-   "summary": "We report a radio observation with the MeerKAT radio telescope of the nearby Type Ia SN 2026ahvu (z=0.003589; ~9 Mpc), discovered by ATLAS in NGC 1433 on MJD = 61346.18 (2026-11-02.18). ..."
-  },
-  {
-   "title": "ATel 18150: Radio brightening of TDE 2025aarm in ASKAP data",
-   "url": "https://www.astronomerstelegram.org/?read=18150",
-   "published": "2026-11-10T20:29:10+00:00",
-   "names": [],
-   "of_interest": true,
-   "summary": "We report radio detection and flux evolution of the nearby TDE 2025aarm (z = 0.01368) obtained as part of the Australian SKA Pathfinder (ASKAP) Variables and Slow Transients survey (Murphy et al. ..."
-  },
-  {
-   "title": "ATel 18149: Spectroscopic and photometric classification of ASASSN-17lp as a WZ Sge-type dwarf nova candidate",
-   "url": "https://www.astronomerstelegram.org/?read=18149",
-   "published": "2026-11-10T19:41:39+00:00",
-   "names": [
-    "ASASSN-17lp",
-    "ZTF18adgexkg"
-   ],
-   "of_interest": true,
-   "summary": "We report on spectral features seen in the transient ASASSN-17lp = ZTF18adgexkg = MASTER OT J072024.11+274152.5 on 2026-11-10.706 UT obtained by using a fiber-fed integral field spectrograph (KOOLS-IFU; Matsubayashi et al. ..."
-  },
-  {
-   "title": "ATel 18148: X-ray upper limit on the progenitor of the Type Ia supernova 2026ahvu in NGC 1433",
-   "url": "https://www.astronomerstelegram.org/?read=18148",
-   "published": "2026-11-10T08:56:46+00:00",
-   "names": [],
-   "of_interest": true,
-   "summary": "Following the discovery of the Type Ia supernova (SN) 2026ahvu in the nearby galaxy NGC 1433 (https://www.wis-tns.org/astronotes/astronote/2026-310), we searched for the progenitor X-ray counterpart with the archival Chandra X-ray Observatory data. ..."
   }
  ],
  "sky_chart": null
