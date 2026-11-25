@@ -1,7 +1,7 @@
 {
  "schema_version": 1,
  "pipeline_version": "0.1.0",
- "generated_utc": "2026-11-24 04:54",
+ "generated_utc": "2026-11-25 03:39",
  "site": {
   "name": "Tomball, TX",
   "lat": 30.0972,
@@ -19,363 +19,48 @@
   "match_radius_arcsec": 5
  },
  "weather": {
-  "verdict": "NO-GO",
-  "line": "NO-GO: no clear hour block; cloud 100%; cloud 100%, gusts 16 mph; cloud 100%, gusts 19 mph; seeing 2-2.5\", transparency 3/8 (7Timer, 1 = best)",
+  "verdict": "MAYBE",
+  "line": "MAYBE: Open-Meteo unavailable; 7Timer says mostly cloudy",
   "window": "17:00-00:00",
   "clear_from": null,
   "clear_to": null,
-  "hours": [
-   {
-    "hour": "17:00",
-    "cloud_eff": 100.0,
-    "cloud_low": 100.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 7.2,
-    "gust_mph": 14.3,
-    "temp_f": 61.3,
-    "dew_point_f": 49.0,
-    "clear": false,
-    "why_not": "cloud 100%"
-   },
-   {
-    "hour": "18:00",
-    "cloud_eff": 100.0,
-    "cloud_low": 100.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 8.4,
-    "gust_mph": 19.2,
-    "temp_f": 59.8,
-    "dew_point_f": 50.3,
-    "clear": false,
-    "why_not": "cloud 100%, gusts 19 mph"
-   },
-   {
-    "hour": "19:00",
-    "cloud_eff": 100.0,
-    "cloud_low": 100.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 6.7,
-    "gust_mph": 14.8,
-    "temp_f": 60.8,
-    "dew_point_f": 48.6,
-    "clear": false,
-    "why_not": "cloud 100%"
-   },
-   {
-    "hour": "20:00",
-    "cloud_eff": 100.0,
-    "cloud_low": 100.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 4.9,
-    "gust_mph": 16.3,
-    "temp_f": 58.8,
-    "dew_point_f": 51.2,
-    "clear": false,
-    "why_not": "cloud 100%, gusts 16 mph"
-   },
-   {
-    "hour": "21:00",
-    "cloud_eff": 100.0,
-    "cloud_low": 100.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 6.5,
-    "gust_mph": 19.5,
-    "temp_f": 59.1,
-    "dew_point_f": 49.0,
-    "clear": false,
-    "why_not": "cloud 100%, gusts 20 mph"
-   },
-   {
-    "hour": "22:00",
-    "cloud_eff": 1.0,
-    "cloud_low": 1.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 6.1,
-    "gust_mph": 17.4,
-    "temp_f": 57.5,
-    "dew_point_f": 43.7,
-    "clear": false,
-    "why_not": "gusts 17 mph"
-   },
-   {
-    "hour": "23:00",
-    "cloud_eff": 78.0,
-    "cloud_low": 78.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 5.0,
-    "gust_mph": 15.4,
-    "temp_f": 56.3,
-    "dew_point_f": 43.5,
-    "clear": false,
-    "why_not": "cloud 78%, gusts 15 mph"
-   }
-  ],
-  "hours_night": [
-   {
-    "hour": "17:00",
-    "cloud_eff": 100.0,
-    "cloud_low": 100.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 7.2,
-    "gust_mph": 14.3,
-    "temp_f": 61.3,
-    "dew_point_f": 49.0,
-    "clear": false,
-    "why_not": "cloud 100%",
-    "in_verdict": true
-   },
-   {
-    "hour": "18:00",
-    "cloud_eff": 100.0,
-    "cloud_low": 100.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 8.4,
-    "gust_mph": 19.2,
-    "temp_f": 59.8,
-    "dew_point_f": 50.3,
-    "clear": false,
-    "why_not": "cloud 100%, gusts 19 mph",
-    "in_verdict": true
-   },
-   {
-    "hour": "19:00",
-    "cloud_eff": 100.0,
-    "cloud_low": 100.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 6.7,
-    "gust_mph": 14.8,
-    "temp_f": 60.8,
-    "dew_point_f": 48.6,
-    "clear": false,
-    "why_not": "cloud 100%",
-    "in_verdict": true
-   },
-   {
-    "hour": "20:00",
-    "cloud_eff": 100.0,
-    "cloud_low": 100.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 4.9,
-    "gust_mph": 16.3,
-    "temp_f": 58.8,
-    "dew_point_f": 51.2,
-    "clear": false,
-    "why_not": "cloud 100%, gusts 16 mph",
-    "in_verdict": true
-   },
-   {
-    "hour": "21:00",
-    "cloud_eff": 100.0,
-    "cloud_low": 100.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 6.5,
-    "gust_mph": 19.5,
-    "temp_f": 59.1,
-    "dew_point_f": 49.0,
-    "clear": false,
-    "why_not": "cloud 100%, gusts 20 mph",
-    "in_verdict": true
-   },
-   {
-    "hour": "22:00",
-    "cloud_eff": 1.0,
-    "cloud_low": 1.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 6.1,
-    "gust_mph": 17.4,
-    "temp_f": 57.5,
-    "dew_point_f": 43.7,
-    "clear": false,
-    "why_not": "gusts 17 mph",
-    "in_verdict": true
-   },
-   {
-    "hour": "23:00",
-    "cloud_eff": 78.0,
-    "cloud_low": 78.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 5.0,
-    "gust_mph": 15.4,
-    "temp_f": 56.3,
-    "dew_point_f": 43.5,
-    "clear": false,
-    "why_not": "cloud 78%, gusts 15 mph",
-    "in_verdict": true
-   },
-   {
-    "hour": "00:00",
-    "cloud_eff": 30.0,
-    "cloud_low": 30.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 6.5,
-    "gust_mph": 19.5,
-    "temp_f": 55.9,
-    "dew_point_f": 44.7,
-    "clear": false,
-    "why_not": "cloud 30%, gusts 20 mph",
-    "in_verdict": false
-   },
-   {
-    "hour": "01:00",
-    "cloud_eff": 80.0,
-    "cloud_low": 80.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 7.0,
-    "gust_mph": 16.3,
-    "temp_f": 55.8,
-    "dew_point_f": 45.4,
-    "clear": false,
-    "why_not": "cloud 80%, gusts 16 mph",
-    "in_verdict": false
-   },
-   {
-    "hour": "02:00",
-    "cloud_eff": 90.0,
-    "cloud_low": 90.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 8.7,
-    "gust_mph": 16.8,
-    "temp_f": 55.3,
-    "dew_point_f": 45.0,
-    "clear": false,
-    "why_not": "cloud 90%, gusts 17 mph",
-    "in_verdict": false
-   },
-   {
-    "hour": "03:00",
-    "cloud_eff": 18.0,
-    "cloud_low": 18.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 8.5,
-    "gust_mph": 17.9,
-    "temp_f": 53.5,
-    "dew_point_f": 42.9,
-    "clear": false,
-    "why_not": "gusts 18 mph",
-    "in_verdict": false
-   },
-   {
-    "hour": "04:00",
-    "cloud_eff": 3.0,
-    "cloud_low": 3.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 0.0,
-    "wind_mph": 6.2,
-    "gust_mph": 18.8,
-    "temp_f": 51.4,
-    "dew_point_f": 40.4,
-    "clear": false,
-    "why_not": "gusts 19 mph",
-    "in_verdict": false
-   },
-   {
-    "hour": "05:00",
-    "cloud_eff": 2.0,
-    "cloud_low": 2.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 1.0,
-    "wind_mph": 5.4,
-    "gust_mph": 17.7,
-    "temp_f": 49.8,
-    "dew_point_f": 40.0,
-    "clear": false,
-    "why_not": "gusts 18 mph",
-    "in_verdict": false
-   },
-   {
-    "hour": "06:00",
-    "cloud_eff": 1.0,
-    "cloud_low": 1.0,
-    "cloud_mid": 0.0,
-    "cloud_high": 0.0,
-    "rain_pct": 1.0,
-    "wind_mph": 6.0,
-    "gust_mph": 18.3,
-    "temp_f": 48.8,
-    "dew_point_f": 37.9,
-    "clear": false,
-    "why_not": "gusts 18 mph",
-    "in_verdict": false
-   },
-   {
-    "hour": "07:00",
-    "cloud_eff": 100.0,
-    "cloud_low": 100.0,
-    "cloud_mid": 13.0,
-    "cloud_high": 0.0,
-    "rain_pct": 4.0,
-    "wind_mph": 8.5,
-    "gust_mph": 21.7,
-    "temp_f": 49.3,
-    "dew_point_f": 36.4,
-    "clear": false,
-    "why_not": "cloud 100%, gusts 22 mph",
-    "in_verdict": false
-   }
-  ],
+  "hours": [],
+  "hours_night": [],
   "seven_timer": {
    "points": [
     {
-     "time_utc": "2026-11-24 03:00",
-     "cloud_max_pct": 100,
-     "seeing": 7,
-     "transparency": 3,
+     "time_utc": "2026-11-25 00:00",
+     "cloud_max_pct": 94,
+     "seeing": 6,
+     "transparency": 2,
      "prec_type": "none",
      "clear": false
     },
     {
-     "time_utc": "2026-11-24 06:00",
-     "cloud_max_pct": 81,
-     "seeing": 7,
+     "time_utc": "2026-11-25 03:00",
+     "cloud_max_pct": 100,
+     "seeing": 6,
+     "transparency": 4,
+     "prec_type": "rain",
+     "clear": false
+    },
+    {
+     "time_utc": "2026-11-25 06:00",
+     "cloud_max_pct": 100,
+     "seeing": 6,
      "transparency": 3,
-     "prec_type": "none",
+     "prec_type": "rain",
      "clear": false
     }
    ],
    "mostly_clear": false,
-   "seeing_best": 7,
-   "seeing_arcsec": "2-2.5",
-   "transparency_best": 3
+   "seeing_best": 6,
+   "seeing_arcsec": "1.5-2",
+   "transparency_best": 2
   },
-  "errors": {},
+  "errors": {
+   "Open-Meteo": "HTTPSConnectionPool(host='api.open-meteo.com', port=443): Read timed out. (read timeout=30)"
+  },
   "clear_outside_url": "https://clearoutside.com/forecast/30.10/-95.62",
   "thresholds": {
    "enabled": true,
@@ -389,7 +74,7 @@
   }
  },
  "night": {
-  "date": "2026-11-23",
+  "date": "2026-11-24",
   "sunset": "17:25",
   "sunrise": "07:00",
   "dark_start": "18:20",
@@ -414,7 +99,7 @@
    "source": "Rochester",
    "ok": true,
    "error": "",
-   "fetched": 7917,
+   "fetched": 7988,
    "candidates": 1
   },
   {
@@ -429,7 +114,7 @@
    "ok": true,
    "error": "",
    "fetched": 10,
-   "candidates": 1
+   "candidates": 0
   }
  ],
  "targets": [],
@@ -454,6 +139,22 @@
   }
  ],
  "atel_recent": [
+  {
+   "title": "ATel 18168: Three outbursts of Comet 10P (Tempel)",
+   "url": "https://www.astronomerstelegram.org/?read=18168",
+   "published": "2026-11-24T20:25:11+00:00",
+   "names": [],
+   "of_interest": true,
+   "summary": "Comet 10P/Tempel 2, a short-period comet discovered by W. Tempel on 4 July 1873 at Brera observatory in Milan, reached perihelion on 2 August 2026, at a heliocentric distance of 1.42 AU (ATel #17942). ..."
+  },
+  {
+   "title": "ATel 18167: Fermi-LAT detection of enhanced gamma-ray activity from the flat-spectrum radio quasar PKS 2232-488",
+   "url": "https://www.astronomerstelegram.org/?read=18167",
+   "published": "2026-11-24T20:09:19+00:00",
+   "names": [],
+   "of_interest": false,
+   "summary": "The Large Area Telescope (LAT), one of the two instruments on the Fermi Gamma-ray Space Telescope, has observed enhanced gamma-ray activity from a source positionally consistent with the flat-spectrum radio quasar PKS 2232-488, also known as 4FGL J2235.3-4836 (Abdollahi et al. ..."
+  },
   {
    "title": "ATel 18166: Fermi-LAT detection of renewed gamma-ray activity from the flat-spectrum radio quasar PKS 1958-179",
    "url": "https://www.astronomerstelegram.org/?read=18166",
@@ -517,22 +218,6 @@
    "names": [],
    "of_interest": false,
    "summary": "The MAGIC Collaboration reports the detection of very-high-energy (VHE; E > 100 GeV) gamma-ray emission from the compact steep-spectrum (CSS) quasar 3C 138 (4FGL J0521.2+1637, R.A.=80.292 deg, Dec.=+16.639 deg, J2000.0). ..."
-  },
-  {
-   "title": "ATel 18158: Chandra spectra of nova V488 Sge",
-   "url": "https://www.astronomerstelegram.org/?read=18158",
-   "published": "2026-11-18T16:08:14+00:00",
-   "names": [],
-   "of_interest": true,
-   "summary": "The recent nova V488 Sge (ATel #18138, #18135, #15129, #18090, #18088, #18084, #18053, #18033, #18022, #18021, #18014, #18009, #18008) was observed with Chandra and the Low Energy Transmission Grating coupled with the HRC-S camera for about 14 kiloseconds on 2026-11-10 and for about 13 kiloseconds on 2026-11-11. ..."
-  },
-  {
-   "title": "ATel 18157: H.E.S.S. discovery of the radio-loud AGN PKS 0521-365 at very-high-energy gamma rays",
-   "url": "https://www.astronomerstelegram.org/?read=18157",
-   "published": "2026-11-17T18:19:50+00:00",
-   "names": [],
-   "of_interest": true,
-   "summary": "PKS 0521-365 (RA: 05h22m57.98s, DEC: \u201336d27m30.85s, J2000) is a nearby (z=0.057) AGN whose classification remains ambiguous, with properties intermediate between those of blazars and radio galaxies (D'Ammando et al. ..."
   }
  ],
  "sky_chart": null
